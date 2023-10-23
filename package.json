@@ -21,6 +21,7 @@
     "vditor": "^3.9.4",
     "vicons": "^0.0.1",
     "vite-plugin-require": "^1.1.10",
+    "vite-plugin-top-level-await": "^1.3.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },

@@ -1,7 +1,24 @@
-# Vue 3 + Vite
+![](./public/favicon.svg)
+# Thost
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+一个依附于组卷网的专为高中生准备的试题工具，提供获取题目+优化排版+快速打印的功能。
 
-## Recommended IDE Setup
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+
+## How to build?
+应用基于vite构建。
+
+请运行：
+```batch
+npm install
+```
+
+开启服务器：
+```batch
+npm run dev
+```
+
+构建：
+```batch
+npm run build
+```
