@@ -1,0 +1,31 @@
+{
+  "name": "thost-v2-fe",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vicons/ionicons5": "^0.12.0",
+    "@vueuse/core": "^10.4.0",
+    "@vueuse/sound": "^2.0.1",
+    "animejs": "^3.2.1",
+    "aplayer": "^1.10.1",
+    "calendar-graph": "^1.0.1",
+    "html-to-image": "^1.11.11",
+    "naive-ui": "^2.34.4",
+    "sweetalert": "^2.1.2",
+    "vditor": "^3.9.4",
+    "vicons": "^0.0.1",
+    "vite-plugin-require": "^1.1.10",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.0"
+  }
+}

@@ -1,0 +1,46 @@
+export default [
+    {path:"/zujuanink",redirect:"/zujuanink/before"},
+    {path:"/zujuanink/home",component: ()=>import("./homepageWrap.vue"),children:[
+        {path:"/zujuanink/preparing-room/queslist",component: ()=>import("./views/preparing-room/queslist.vue")},
+        {path:"/zujuanink/preparing-room/paper",component: ()=>import("./views/preparing-room/paper.vue")},
+        {path:"/zujuanink/preparing-room/incorr-coll",component: ()=>import("./views/preparing-room/incorr-coll.vue")},
+        {path:"/zujuanink/preparing-room/basket",component: ()=>import("./views/preparing-room/basket.vue")},
+        {path:"/zujuanink/preparing-room/userbank",component: ()=>import("./views/preparing-room/userbank.vue")},
+        {path:"/zujuanink/preparing-room/all",component: ()=>import("./views/preparing-room/all.vue")},
+        {path:"/zujuanink/list/incorr-coll",component: ()=>import("./views/list/incorr-coll.vue")},
+        {path:"/zujuanink/list/incorr-coll/daybefore",component: ()=>import("./views/list/incorr-coll-daybefore.vue")},
+        {path:"/zujuanink/list/incorr-coll/manualadd",component: ()=>import("./views/list/manualadd.vue")},
+        {path:"/zujuanink/list/coll",component: ()=>import("./views/list/coll.vue")},
+
+        {path:"/zujuanink/records/",component: ()=>import("./views/list/records.vue")},
+        {path:"/zujuanink/settings",component: ()=>import("./views/settings.vue")},
+        {path:"/zujuanink/stats",component: ()=>import("./views/stats.vue")},
+        {path:"/zujuanink/home",component: ()=>import("./views/home.vue")},
+        {path:"/zujuanink/about",component: ()=>import("./views/about.vue")},
+        {path:"/zujuanink/before",component: ()=>import("./views/before.vue")},
+        {path:"/zujuanink/export/f",component: ()=>import("./views/export/f.vue")},
+        {path:"/zujuanink/export/tl",component: ()=>import("./views/export/tlist.vue")},
+        {path:"/zujuanink/ftc",component: ()=>import("./views/ftc/ftc.vue")},
+        {path:"/zujuanink/ftc/export",component: ()=>import("./views/ftc/export.vue")},
+        {path:"/zujuanink/ftc/manualadd",component: ()=>import("./views/ftc/manualadd.vue")}
+    ]},
+    // {path:"/zujuanink/preparing-room/:page*",component: ()=>import("./homepageWrap.vue")},
+    {path:"/zujuanink/room",component: ()=>import("./views/room/roomHost.vue"),children:[
+        {path:"/zujuanink/room",component: ()=>import("./views/room/room.vue")},
+        {path:"/zujuanink/room/checkout",component: ()=>import("./views/room/room.checkout.vue")}
+    ]},
+    {path:"/gen/:uuid",component: ()=>import("./views/export/blankholder.vue")},
+    {path:"/gen",component: ()=>import("./views/export/blankholder.vue")}
+    // {path:"/zujuanink/room/checkout",component: ()=>import("./room.checkout.vue")},
+    // {path:"/zujuanink/room-ild",component: ()=>import("./ild/room.vue")},
+    // {path:"/zujuanink/room-ild/checkout",component: ()=>import("./ild/room.checkout.vue")},
+    // {path:"/zujuanink/list/:page*",component: ()=>import("./homepageWrap.vue")},
+    // {path:"/zujuanink/records/:page*",component: ()=>import("./homepageWrap.vue")},
+    // {path:"/zujuanink/records",component: ()=>import("./records.vue")},
+    // {path:"/zujuanink/debugger/showImgFromDonerec/:id",component: ()=>import("./debugger/debugger.showImgFromDonerec.vue")},
+    // {path:"/zujuanink/debugger/generateImg",component: ()=>import("./debugger/debugger.generateImg.vue")},
+    // {path:"/zujuanink/debugger/hometest",component: ()=>import("./debugger/home.vue")},
+    // {path:"/zujuanink/debugger/hometest2",component: ()=>import("./debugger/home-f1.vue")},
+    // {path:"/zujuanink/room-dev",component: ()=>import("./room/roomHost.vue")},
+    // {path:"/zujuanink/preparing-room/paper",component: ()=>import("./APIList/paper.vue")},
+]

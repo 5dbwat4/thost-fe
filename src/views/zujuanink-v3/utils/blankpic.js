@@ -1,0 +1,1 @@
+export default `data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><foreignObject width="300" height="50"><body xmlns="http://www.w3.org/1999/xhtml"><p>以手动添加错题的方式被收录</p></body></foreignObject></svg>`

@@ -1,0 +1,570 @@
+{
+    "code": 0,
+    "data": [
+        {
+            "id": 7,
+            "inMore": false,
+            "items": [
+                {
+                    "id": 0,
+                    "name": "全部题型",
+                    "placeholder": "题型",
+                    "selected": true
+                },
+                {
+                    "children": [
+                        {
+                            "id": 2901,
+                            "name": "全部选择题",
+                            "placeholder": "全部选择题",
+                            "selected": false
+                        },
+                        {
+                            "id": 290101,
+                            "name": "单选题",
+                            "placeholder": "单选题",
+                            "selected": false
+                        },
+                        {
+                            "id": 290104,
+                            "name": "多选题",
+                            "placeholder": "多选题",
+                            "selected": false
+                        },
+                        {
+                            "id": 290105,
+                            "name": "选择题组",
+                            "placeholder": "选择题组",
+                            "selected": false
+                        }
+                    ],
+                    "id": 2901,
+                    "name": "选择题",
+                    "placeholder": "选择题",
+                    "selected": false
+                },
+                {
+                    "id": 2902,
+                    "name": "填空题",
+                    "placeholder": "填空题",
+                    "selected": false
+                },
+                {
+                    "id": 2903,
+                    "name": "实验题",
+                    "placeholder": "实验题",
+                    "selected": false
+                },
+                {
+                    "id": 2904,
+                    "name": "解答题",
+                    "placeholder": "解答题",
+                    "selected": false
+                },
+                {
+                    "id": 2905,
+                    "name": "作图题",
+                    "placeholder": "作图题",
+                    "selected": false
+                },
+                {
+                    "id": 2906,
+                    "name": "知识点填空题",
+                    "placeholder": "知识点填空题",
+                    "selected": false
+                },
+                {
+                    "id": 2907,
+                    "name": "判断题",
+                    "placeholder": "判断题",
+                    "selected": false
+                }
+            ],
+            "name": "题型",
+            "queryName": "types",
+            "selected": false,
+            "struct": 1
+        },
+        {
+            "id": 4,
+            "inMore": false,
+            "items": [
+                {
+                    "id": 0,
+                    "name": "全部难度",
+                    "placeholder": "难度",
+                    "selected": true
+                },
+                {
+                    "id": 1,
+                    "name": "容易",
+                    "placeholder": "容易",
+                    "selected": false
+                },
+                {
+                    "id": 2,
+                    "name": "较易",
+                    "placeholder": "较易",
+                    "selected": false
+                },
+                {
+                    "id": 3,
+                    "name": "适中",
+                    "placeholder": "适中",
+                    "selected": false
+                },
+                {
+                    "id": 4,
+                    "name": "较难",
+                    "placeholder": "较难",
+                    "selected": false
+                },
+                {
+                    "id": 5,
+                    "name": "困难",
+                    "placeholder": "困难",
+                    "selected": false
+                }
+            ],
+            "name": "难度",
+            "queryName": "diffs",
+            "selected": false,
+            "struct": 2
+        },
+        {
+            "id": 9,
+            "inMore": false,
+            "items": [
+                {
+                    "id": 0,
+                    "name": "全部类型",
+                    "placeholder": "类型",
+                    "selected": true
+                },
+                {
+                    "id": 1,
+                    "name": "课时练习",
+                    "placeholder": "课时练习",
+                    "selected": false
+                },
+                {
+                    "id": 2,
+                    "name": "单元测试",
+                    "placeholder": "单元测试",
+                    "selected": false
+                },
+                {
+                    "id": 3,
+                    "name": "阶段练习",
+                    "placeholder": "阶段练习",
+                    "selected": false
+                },
+                {
+                    "id": 4,
+                    "name": "期中",
+                    "placeholder": "期中",
+                    "selected": false
+                },
+                {
+                    "id": 5,
+                    "name": "期末",
+                    "placeholder": "期末",
+                    "selected": false
+                },
+                {
+                    "id": 6,
+                    "name": "专题练习",
+                    "placeholder": "专题练习",
+                    "selected": false
+                },
+                {
+                    "id": 7,
+                    "name": "竞赛",
+                    "placeholder": "竞赛",
+                    "selected": false
+                },
+                {
+                    "id": 8,
+                    "name": "开学考试",
+                    "placeholder": "开学考试",
+                    "selected": false
+                },
+                {
+                    "id": 9,
+                    "name": "高考模拟",
+                    "placeholder": "高考模拟",
+                    "selected": false
+                },
+                {
+                    "id": 12,
+                    "name": "高考真题",
+                    "placeholder": "高考真题",
+                    "selected": false
+                },
+                {
+                    "id": 15,
+                    "name": "学业考试",
+                    "placeholder": "学业考试",
+                    "selected": false
+                },
+                {
+                    "id": 20,
+                    "name": "零模",
+                    "placeholder": "零模",
+                    "selected": false
+                },
+                {
+                    "id": 21,
+                    "name": "一模",
+                    "placeholder": "一模",
+                    "selected": false
+                },
+                {
+                    "id": 22,
+                    "name": "二模",
+                    "placeholder": "二模",
+                    "selected": false
+                },
+                {
+                    "id": 23,
+                    "name": "三模",
+                    "placeholder": "三模",
+                    "selected": false
+                },
+                {
+                    "id": 24,
+                    "name": "模拟预测",
+                    "placeholder": "模拟预测",
+                    "selected": false
+                },
+                {
+                    "id": 31,
+                    "name": "课前预习",
+                    "placeholder": "课前预习",
+                    "selected": false
+                }
+            ],
+            "name": "来源",
+            "queryName": "sources",
+            "selected": false,
+            "struct": 2
+        },
+        {
+            "id": 5,
+            "inMore": false,
+            "items": [
+                {
+                    "id": 0,
+                    "name": "综合",
+                    "placeholder": "综合",
+                    "selected": false
+                },
+                {
+                    "id": 1,
+                    "name": "最热",
+                    "placeholder": "最热",
+                    "selected": false
+                },
+                {
+                    "id": 2,
+                    "name": "最新",
+                    "placeholder": "最新",
+                    "selected": true
+                }
+            ],
+            "name": "排序",
+            "queryName": "orderBy",
+            "selected": false,
+            "struct": 2
+        },
+        {
+            "id": 1,
+            "inMore": true,
+            "items": [
+                {
+                    "id": 0,
+                    "name": "全部年份",
+                    "placeholder": "年份",
+                    "selected": true
+                },
+                {
+                    "id": 2023,
+                    "name": "2023",
+                    "placeholder": "2023",
+                    "selected": false
+                },
+                {
+                    "id": 2022,
+                    "name": "2022",
+                    "placeholder": "2022",
+                    "selected": false
+                },
+                {
+                    "id": 2021,
+                    "name": "2021",
+                    "placeholder": "2021",
+                    "selected": false
+                },
+                {
+                    "id": 2020,
+                    "name": "2020",
+                    "placeholder": "2020",
+                    "selected": false
+                },
+                {
+                    "id": -1,
+                    "name": "更早以前",
+                    "placeholder": "更早以前",
+                    "selected": false
+                }
+            ],
+            "name": "年份",
+            "queryName": "years",
+            "selected": false,
+            "struct": 2
+        },
+        {
+            "id": 6,
+            "inMore": true,
+            "items": [
+                {
+                    "id": 0,
+                    "name": "全部年级",
+                    "placeholder": "年级",
+                    "selected": true
+                },
+                {
+                    "id": 10,
+                    "name": "高一",
+                    "placeholder": "高一",
+                    "selected": false
+                },
+                {
+                    "id": 11,
+                    "name": "高二",
+                    "placeholder": "高二",
+                    "selected": false
+                },
+                {
+                    "id": 12,
+                    "name": "高三",
+                    "placeholder": "高三",
+                    "selected": false
+                }
+            ],
+            "name": "年级",
+            "queryName": "grades",
+            "selected": false,
+            "struct": 2
+        },
+        {
+            "id": 2,
+            "inMore": true,
+            "items": [
+                {
+                    "id": 0,
+                    "name": "全部地区",
+                    "placeholder": "地区",
+                    "selected": true
+                },
+                {
+                    "id": 1,
+                    "name": "全国",
+                    "placeholder": "全国",
+                    "selected": false
+                },
+                {
+                    "id": 110000,
+                    "name": "北京",
+                    "placeholder": "北京",
+                    "selected": false
+                },
+                {
+                    "id": 120000,
+                    "name": "天津",
+                    "placeholder": "天津",
+                    "selected": false
+                },
+                {
+                    "id": 130000,
+                    "name": "河北",
+                    "placeholder": "河北",
+                    "selected": false
+                },
+                {
+                    "id": 140000,
+                    "name": "山西",
+                    "placeholder": "山西",
+                    "selected": false
+                },
+                {
+                    "id": 150000,
+                    "name": "内蒙古",
+                    "placeholder": "内蒙古",
+                    "selected": false
+                },
+                {
+                    "id": 210000,
+                    "name": "辽宁",
+                    "placeholder": "辽宁",
+                    "selected": false
+                },
+                {
+                    "id": 220000,
+                    "name": "吉林",
+                    "placeholder": "吉林",
+                    "selected": false
+                },
+                {
+                    "id": 230000,
+                    "name": "黑龙江",
+                    "placeholder": "黑龙江",
+                    "selected": false
+                },
+                {
+                    "id": 310000,
+                    "name": "上海",
+                    "placeholder": "上海",
+                    "selected": false
+                },
+                {
+                    "id": 320000,
+                    "name": "江苏",
+                    "placeholder": "江苏",
+                    "selected": false
+                },
+                {
+                    "id": 330000,
+                    "name": "浙江",
+                    "placeholder": "浙江",
+                    "selected": false
+                },
+                {
+                    "id": 340000,
+                    "name": "安徽",
+                    "placeholder": "安徽",
+                    "selected": false
+                },
+                {
+                    "id": 350000,
+                    "name": "福建",
+                    "placeholder": "福建",
+                    "selected": false
+                },
+                {
+                    "id": 360000,
+                    "name": "江西",
+                    "placeholder": "江西",
+                    "selected": false
+                },
+                {
+                    "id": 370000,
+                    "name": "山东",
+                    "placeholder": "山东",
+                    "selected": false
+                },
+                {
+                    "id": 410000,
+                    "name": "河南",
+                    "placeholder": "河南",
+                    "selected": false
+                },
+                {
+                    "id": 420000,
+                    "name": "湖北",
+                    "placeholder": "湖北",
+                    "selected": false
+                },
+                {
+                    "id": 430000,
+                    "name": "湖南",
+                    "placeholder": "湖南",
+                    "selected": false
+                },
+                {
+                    "id": 440000,
+                    "name": "广东",
+                    "placeholder": "广东",
+                    "selected": false
+                },
+                {
+                    "id": 450000,
+                    "name": "广西",
+                    "placeholder": "广西",
+                    "selected": false
+                },
+                {
+                    "id": 460000,
+                    "name": "海南",
+                    "placeholder": "海南",
+                    "selected": false
+                },
+                {
+                    "id": 500000,
+                    "name": "重庆",
+                    "placeholder": "重庆",
+                    "selected": false
+                },
+                {
+                    "id": 510000,
+                    "name": "四川",
+                    "placeholder": "四川",
+                    "selected": false
+                },
+                {
+                    "id": 520000,
+                    "name": "贵州",
+                    "placeholder": "贵州",
+                    "selected": false
+                },
+                {
+                    "id": 530000,
+                    "name": "云南",
+                    "placeholder": "云南",
+                    "selected": false
+                },
+                {
+                    "id": 540000,
+                    "name": "西藏",
+                    "placeholder": "西藏",
+                    "selected": false
+                },
+                {
+                    "id": 610000,
+                    "name": "陕西",
+                    "placeholder": "陕西",
+                    "selected": false
+                },
+                {
+                    "id": 620000,
+                    "name": "甘肃",
+                    "placeholder": "甘肃",
+                    "selected": false
+                },
+                {
+                    "id": 630000,
+                    "name": "青海",
+                    "placeholder": "青海",
+                    "selected": false
+                },
+                {
+                    "id": 640000,
+                    "name": "宁夏",
+                    "placeholder": "宁夏",
+                    "selected": false
+                },
+                {
+                    "id": 650000,
+                    "name": "新疆",
+                    "placeholder": "新疆",
+                    "selected": false
+                }
+            ],
+            "name": "地区",
+            "queryName": "areas",
+            "selected": false,
+            "struct": 2
+        }
+    ],
+    "msg": "成功"
+}

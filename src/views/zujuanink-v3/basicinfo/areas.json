@@ -1,0 +1,200 @@
+[
+    {
+        "value": 0,
+        "label": "全部地区",
+        "placeholder": "地区",
+        "selected": true
+    },
+    {
+        "value": 1,
+        "label": "全国",
+        "placeholder": "全国",
+        "selected": false
+    },
+    {
+        "value": 110000,
+        "label": "北京",
+        "placeholder": "北京",
+        "selected": false
+    },
+    {
+        "value": 120000,
+        "label": "天津",
+        "placeholder": "天津",
+        "selected": false
+    },
+    {
+        "value": 130000,
+        "label": "河北",
+        "placeholder": "河北",
+        "selected": false
+    },
+    {
+        "value": 140000,
+        "label": "山西",
+        "placeholder": "山西",
+        "selected": false
+    },
+    {
+        "value": 150000,
+        "label": "内蒙古",
+        "placeholder": "内蒙古",
+        "selected": false
+    },
+    {
+        "value": 210000,
+        "label": "辽宁",
+        "placeholder": "辽宁",
+        "selected": false
+    },
+    {
+        "value": 220000,
+        "label": "吉林",
+        "placeholder": "吉林",
+        "selected": false
+    },
+    {
+        "value": 230000,
+        "label": "黑龙江",
+        "placeholder": "黑龙江",
+        "selected": false
+    },
+    {
+        "value": 310000,
+        "label": "上海",
+        "placeholder": "上海",
+        "selected": false
+    },
+    {
+        "value": 320000,
+        "label": "江苏",
+        "placeholder": "江苏",
+        "selected": false
+    },
+    {
+        "value": 330000,
+        "label": "浙江",
+        "placeholder": "浙江",
+        "selected": false
+    },
+    {
+        "value": 340000,
+        "label": "安徽",
+        "placeholder": "安徽",
+        "selected": false
+    },
+    {
+        "value": 350000,
+        "label": "福建",
+        "placeholder": "福建",
+        "selected": false
+    },
+    {
+        "value": 360000,
+        "label": "江西",
+        "placeholder": "江西",
+        "selected": false
+    },
+    {
+        "value": 370000,
+        "label": "山东",
+        "placeholder": "山东",
+        "selected": false
+    },
+    {
+        "value": 410000,
+        "label": "河南",
+        "placeholder": "河南",
+        "selected": false
+    },
+    {
+        "value": 420000,
+        "label": "湖北",
+        "placeholder": "湖北",
+        "selected": false
+    },
+    {
+        "value": 430000,
+        "label": "湖南",
+        "placeholder": "湖南",
+        "selected": false
+    },
+    {
+        "value": 440000,
+        "label": "广东",
+        "placeholder": "广东",
+        "selected": false
+    },
+    {
+        "value": 450000,
+        "label": "广西",
+        "placeholder": "广西",
+        "selected": false
+    },
+    {
+        "value": 460000,
+        "label": "海南",
+        "placeholder": "海南",
+        "selected": false
+    },
+    {
+        "value": 500000,
+        "label": "重庆",
+        "placeholder": "重庆",
+        "selected": false
+    },
+    {
+        "value": 510000,
+        "label": "四川",
+        "placeholder": "四川",
+        "selected": false
+    },
+    {
+        "value": 520000,
+        "label": "贵州",
+        "placeholder": "贵州",
+        "selected": false
+    },
+    {
+        "value": 530000,
+        "label": "云南",
+        "placeholder": "云南",
+        "selected": false
+    },
+    {
+        "value": 540000,
+        "label": "西藏",
+        "placeholder": "西藏",
+        "selected": false
+    },
+    {
+        "value": 610000,
+        "label": "陕西",
+        "placeholder": "陕西",
+        "selected": false
+    },
+    {
+        "value": 620000,
+        "label": "甘肃",
+        "placeholder": "甘肃",
+        "selected": false
+    },
+    {
+        "value": 630000,
+        "label": "青海",
+        "placeholder": "青海",
+        "selected": false
+    },
+    {
+        "value": 640000,
+        "label": "宁夏",
+        "placeholder": "宁夏",
+        "selected": false
+    },
+    {
+        "value": 650000,
+        "label": "新疆",
+        "placeholder": "新疆",
+        "selected": false
+    }
+]
