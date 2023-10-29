@@ -250,9 +250,9 @@
         text-align: right;
     }
 
-    img {
-        max-width: 350px;
-    }
+    /* img { */
+        /* max-width: 350px; */
+    /* } */
 
     td {
         padding: 0

@@ -43,9 +43,9 @@ table{
     text-align:right;
 }
 
-img{
+/* img{
     max-width: 350px;
-}
+} */
 
 td{
     padding:0

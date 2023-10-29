@@ -1,5 +1,5 @@
 <template>
-    <div class="hanged ">
+    <div class="hanged noprint">
         <n-p>图片处理 Current Function:{{ registeredEvents.imageonclick }} <n-button text @click="registeredEvents.imageonclick='none'">Reset</n-button></n-p>
 <n-button class="noprint" type="success" @click="registeredEvents.imageonclick='imageresize'">图片大小</n-button>
 <n-button class="noprint" type="success" @click="registeredEvents.imageonclick='deleteNum'">删除图片下方的题号</n-button>
@@ -9,6 +9,7 @@
 <n-divider/>
 <n-p>试题块处理 Current Function:{{ registeredEvents.blockonclick }} <n-button text @click="registeredEvents.blockonclick='none'">Reset</n-button></n-p>
 <n-button class="noprint" type="success" @click="registeredEvents.blockonclick='blockextent';">提供空行</n-button>
+<n-button class="noprint" type="success" @click="registeredEvents.bodyonclick='cnaddline';">语文：添加横线</n-button>
 <n-divider/>
 <n-p>全文处理</n-p>
 <n-button class="noprint" type="success" @click="deleteUnnecessaryBRs()">删除多余换行</n-button>
@@ -22,7 +23,7 @@
 <n-button class="noprint" @click="detable">Destroy table</n-button>
 
 <n-button class="noprint" type="success" @click="optablereset()">Optable Reset</n-button>
-<n-button class="noprint" type="success" @click="wordwrap()">WordWrap</n-button>
+<n-button class="noprint" type="success" @click="wordwrap()">WordBreak</n-button>
 <n-divider/>
 <n-button class="noprint"  type="success" @click="op2change()">导出页</n-button>
 <n-button class="noprint" @click="showPagePagenation=!showPagePagenation">Toggle sPP</n-button>
@@ -63,7 +64,10 @@ const registeredEvents=ref({
 
 
 const wordwrap=()=>{
-    document.getElementById("coreop").style.wordBreak="break-all"
+    document.querySelectorAll("bk[type=underline]").forEach(ee=>{
+        ee.style.wordBreak="break-all"
+        ee.style.userSelect="none"
+    })
 }
 onMounted(()=>{
 
@@ -287,6 +291,39 @@ onMounted(()=>{
      })
 })();
 
+
+//CN-add-line
+;(()=>{
+
+document.getElementById("coreop").addEventListener("mouseover",(e)=>{
+    if(registeredEvents.value.bodyonclick=="cnaddline"){
+        e.target.classList.add("shadow")
+    }
+})
+document.getElementById("coreop").addEventListener("mouseout",(e)=>{
+    if(registeredEvents.value.bodyonclick=="cnaddline"){
+        e.target.classList.remove("shadow")
+    }
+})
+document.getElementById("coreop").addEventListener("click",(e)=>{
+    if(registeredEvents.value.bodyonclick=="cnaddline"){
+        if(e.nextElementSibling?.tagName=="BR"){
+            e.nextElementSibling.style.display="none"
+        }
+        e.target.insertAdjacentHTML("afterend",`
+        <span style="display: block;
+  height: 15pt;
+  text-decoration: underline dashed;
+  overflow: clip;
+  font-size: 14.5pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        `)
+
+    }
+})
+
+})();
+
+
 })
 
 const blankretheme1=()=>{
@@ -346,6 +383,7 @@ const betterfoENMain=()=>{
         v.innerHTML=v.innerHTML.replace(/【小题(\d*)】/,"$1.")
     })
     dom.querySelectorAll("bk").forEach(v=>{
+        v.style="text-decoration: underline black;"
         v.innerHTML="<u>&nbsp;&nbsp;&nbsp;"+v.attributes.index.nodeValue+"&nbsp;&nbsp;&nbsp;</u>"
         
     })
@@ -364,7 +402,9 @@ const betterfoENMain=()=>{
 
                  if(dom.attributes.data_type.nodeValue="用单词的适当形式完成短文"){
                 dom.querySelectorAll("bk u").forEach(v=>{
-        v.innerHTML=v.innerHTML.replace(/【小题(\d*)】/,"$1.__________________")
+        v.innerHTML=v.innerHTML.replace(/【小题(\d*)】/,` <span>$1.</span><span style="color: white;
+  font-size: 13.5pt;
+  text-decoration: underline 0.5px dashed black;">__________________</span> `)
         v.outerHTML=v.outerHTML.replace("<u>","<span>").replace("</u>","</span>")
     })
 
@@ -521,9 +561,9 @@ table{
     text-align:right;
 }
 
-img{
-    max-width: 350px;
-}
+/* img{ */
+    /* max-width: 350px; */
+/* } */
 
 td{
     padding:0

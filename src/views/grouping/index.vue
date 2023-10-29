@@ -25,8 +25,8 @@
 <div v-if="shown.p&&!displayADirectly"><img :src='API.host+"/oss-storage/"+oo.a.replace("<answerparser>","").replace("</answerparser>","").split("|")[1]+".png"'/></div>
 <div v-if="displayADirectly">
 
-         <n-image  lazy :src="(XKWGetFile[oo.id]||{a:''}).a"><template #placeholder><n-spin/></template></n-image>
-         <n-image  lazy :src="(XKWGetFile[oo.id]||{p:''}).p"><template #placeholder><n-spin/></template></n-image>
+         <n-image  lazy :src="(XKWGetFile[oo.id]||{a:''}).a" :width="700"><template #placeholder><n-spin/></template></n-image>
+         <n-image  lazy :src="(XKWGetFile[oo.id]||{p:''}).p" :width="700"><template #placeholder><n-spin/></template></n-image>
 
         <div>
     </div></div>
@@ -172,11 +172,14 @@ if(displayADirectly.value){
     text-align:right;
 } */
 
-img{
-    max-width: 350px;
-}
+
 
 td{
     padding:0
+}
+</style>
+<style scoped>
+img{
+    max-width: 700px;
 }
 </style>

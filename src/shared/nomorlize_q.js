@@ -13,6 +13,7 @@ function normalizeq(q,Nopt){
         if(v.src.includes("/dksih/")){
             let tmp=/\?resizew=(\d*)/.exec(v.src)
             if(tmp&&tmp.length!=0){
+                if(tmp[1]>500)tmp[1]=500
                 v.style.width=tmp[1]+"px"
                 v.src=v.src.replace(/\?resizew=(\d*)/,"")
                 v.setAttribute("width",tmp[1])
@@ -116,6 +117,36 @@ function normalizeq(q,Nopt){
     // console.log(ool.innerHTML);
 
 // console.log(ool.outerHTML);
+
+
+ool.childNodes.forEach(e=>{
+    if(e.nodeName=="#text"){
+        const chi=document.createElement("p")
+        chi.style.display="inline-block"
+        chi.style.margin="0"
+    
+        chi.innerText=e.textContent
+        if(e.textContent.includes("______________________________________________________")){
+            chi.style.wordBreak="break-all"
+        }
+        e.parentNode.replaceChild(chi,e)
+    }
+})
+
+
+
+ool.querySelectorAll("bk[type=underline]").forEach(
+    (ee)=>{
+    if(ee.innerText.includes("_")){
+        ee.style.color="lightgray"
+  ee.style.fontSize= "13pt";
+//   ee.style.textDecorationLine= "underline";
+//   ee.style.textDecorationStyle= "dashed";
+//   ee.style.textDecorationColor="black";
+//   ee.style.textDecorationThickness=" 0.5px";
+    }
+})
+
 if(Nopt.includeti){
     console.log("rrr");
     ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}. </strong>`)
@@ -126,6 +157,11 @@ if(Nopt.gtittype==3){
 if(Nopt.gtittype==4){
     ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}.</strong> `)
 }
+
+
+
+
+
     return ool.outerHTML
 }
 
