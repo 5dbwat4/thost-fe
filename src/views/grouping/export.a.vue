@@ -2,7 +2,8 @@
          <n-checkbox class="noprint" v-model:checked="displayADirectly" @update:checked="handledisplayADirectlyCheckedChange">
           直接从组卷网获取答案解析数据而非从oss缓存
         </n-checkbox>
-
+        <n-button @click="OCRAll(8)" class="noprint">OCR all chars</n-button> 
+        <n-button @click="OCRAll(3)" class="noprint">OCR all blocks</n-button> 
     <div :style="{width:'18.76cm','line-height':'normal'}" id="oonom">
         <div class="noprint">
             <!-- <div class="labi-container">
@@ -146,6 +147,21 @@ const orcres=ref({}),OCRResAccepted=ref({})
             orcres.value[oo.id]=v.result
         })
     }
+    const OCRAll=(psm)=>{
+        for (let i = 0; i < chunk2array(Tlist.value).length; i++) {
+            let oo=chunk2array(Tlist.value)[i]
+
+            console.log(oo);
+            API.post("/ocr-service",{
+            url:XKWGetFile.value[oo.id].a,
+            psm,
+            lang:"eng+chi_sim"
+        }).then(v=>{
+            orcres.value[oo.id]=v.result
+        })
+        }
+
+    }
     </script>
     
     <style>
@@ -156,6 +172,9 @@ const orcres=ref({}),OCRResAccepted=ref({})
     
     }
     
+    .noprint{
+            user-select: none;
+        }
     /* .labi-container{
         display: block;
         height: fit-content;

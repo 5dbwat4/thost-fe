@@ -1,6 +1,9 @@
 function normalizeq(q,Nopt){
     const ool=document.createElement("div")
     q=q.replaceAll("【题文】","")
+
+
+    q=q.replaceAll(/【小题(\d)】/g,"$1. ")
     ool.innerHTML=q
 
     ool.querySelectorAll("img").forEach(v=>{
@@ -122,7 +125,7 @@ function normalizeq(q,Nopt){
 ool.childNodes.forEach(e=>{
     if(e.nodeName=="#text"){
         const chi=document.createElement("p")
-        chi.style.display="inline-block"
+        chi.style.display="inline"
         chi.style.margin="0"
     
         chi.innerText=e.textContent
@@ -132,8 +135,14 @@ ool.childNodes.forEach(e=>{
         e.parentNode.replaceChild(chi,e)
     }
 })
-
-
+ool.querySelectorAll("sub").forEach(
+    (ee)=>{
+    ee.style.display="inline"
+})
+ool.querySelectorAll("sup").forEach(
+    (ee)=>{
+    ee.style.display="inline"
+})
 
 ool.querySelectorAll("bk[type=underline]").forEach(
     (ee)=>{
@@ -159,7 +168,21 @@ if(Nopt.gtittype==4){
 }
 
 
-
+ool.querySelectorAll("p").forEach(ee=>{
+    if(ee.innerText=="\n\n"){
+        ee.parentNode.removeChild(ee)
+    }
+})
+ool.querySelectorAll("br").forEach(vv=>{
+    if(vv.nextSibling?.tagName=="BR"){
+        vv.nextSibling.style.display="none"
+    }
+})
+ool.querySelectorAll("br").forEach(vv=>{
+        if(vv.style.display=="none"){
+            vv.parentNode.removeChild(vv)
+        }
+})
 
 
     return ool.outerHTML

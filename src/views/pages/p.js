@@ -23,6 +23,26 @@ var regenattInfo = {
     list: [],
     index: ""
 }
+
+localStorage.setItem("__5dbwat_proj__thost_apihost",APILoc)
+
+const API={
+    get:async(url)=>{
+
+        return await fetch(localStorage.getItem("__5dbwat_proj__thost_apihost")+url, {credentials:"include"} ).then(v=>{
+
+          return v.json()})
+    },
+    post:async(url,body)=>{
+
+        return await fetch(localStorage.getItem("__5dbwat_proj__thost_apihost")+url,{"method":"POST","body":JSON.stringify(body),"headers":{"Content-Type":"application/json"}, credentials:"include" }).then(v=>{
+          return v.json()})
+    },
+    get host(){
+        return localStorage.getItem("__5dbwat_proj__thost_apihost")
+    }
+}
+
 async function SaveTn(vid, opt) {
     return new Promise(async (resolve, reject) => {
         let v = BMap[vid]
@@ -116,8 +136,8 @@ async function delete_q(bid, qid) {
 }
 
 
-function SubmitSyncBatch(id, infodom) {
-    fetch(APILoc + "/api/syncbatch/push-to-session/" + id).then(v => v.json()).then(v => { infodom.innerHTML = "Pushed" })
+async function SubmitSyncBatch(id, infodom) {
+   await  fetch(APILoc + "/api/syncbatch/push-to-session/" + id).then(v => v.json()).then(v => { infodom.innerHTML = "Pushed" })
 }
 
 function InitSyncbatch() {
@@ -170,21 +190,62 @@ async function ShowAP_(vid) {
 async function initSaveAllAndPush() {
     console.log("aa")
     document.querySelector(".exam-cnt").insertAdjacentHTML("afterbegin", `
-    <div><button id="SaveAllAndPushP">Save All and Push</button></div>
+    <div><input type="checkbox" id="SaveAllAndPushP_FastMode" checked/>快速收录模式
+    <button id="SaveAllAndPushP">收录所有</button>
+    <button id="SaveAllAndPushP_no1">不收录最后一题</button>
+    <button id="SaveAllAndPushP_no2">不收录最后两题</button><span id="SaveAllAndPushP_Status"></span></div>
     `)
     document.getElementById("SaveAllAndPushP").addEventListener("click", async () => {
+await SAL_Main(0)
+    })
+    document.getElementById("SaveAllAndPushP_no1").addEventListener("click", async () => {
+        await SAL_Main(1)
+    })
+    document.getElementById("SaveAllAndPushP_no2").addEventListener("click", async () => {
+        await SAL_Main(2)
+    })
+    async function SAL_Main(mil){
         const ee = Object.entries(BMap)
-        for (let i = 0; i < ee.length; i++) {
+        if(document.querySelector("#SaveAllAndPushP_FastMode").checked ){
+        await     API.post("/api/syncbatch/start-session",{title:document.querySelector(".exam-title .title-txt").innerText,time:(new Date()).getTime()})
+        }
+        for (let i = 0; i < ee.length-mil; i++) {
             await fetch(APILoc + "/api/qapi/is_collected/" + ee[i][1].attributes.bankid.nodeValue + "/" + ee[i][1].attributes.questionid.nodeValue).then(o => o.json()).then(async (o) => {
-                if (o.found) {
-                    SubmitSyncBatch(o.info.id, document.getElementById(`syncinfo_${ee[i][0]}`))
-                } else {
-                    SubmitSyncBatch(await SaveTn(ee[i][0], { aonly: true }), document.getElementById(`syncinfo_${ee[i][0]}`))
+                console.log(document.getElementById(`syncinfo_${ee[i][0]}`),ee[i]);
+                if(document.querySelector("#SaveAllAndPushP_FastMode").checked){
+                    if (o.found) {
+                       await SubmitSyncBatch(o.info.id, document.getElementById(`syncinfo_${ee[i][0]}`))
+                    } else {
+                       await SubmitSyncBatch(await SaveTn(ee[i][0], { aonly: true }), document.getElementById(`syncinfo_${ee[i][0]}`))
+                    }
+                    document.getElementById("SaveAllAndPushP_Status").innerText=(i+1)+"/"+(ee.length-mil)
+                }else{
+                    if (o.found) {
+                        SubmitSyncBatch(o.info.id, document.getElementById(`syncinfo_${ee[i][0]}`))
+                    } else {
+                        SubmitSyncBatch(await SaveTn(ee[i][0], { aonly: true }), document.getElementById(`syncinfo_${ee[i][0]}`))
+                    }
                 }
+
 
             })
         }
-    })
+        if(document.querySelector("#SaveAllAndPushP_FastMode").checked ){
+            await        API.get("/api/syncbatch/sync-session").then(v=>{
+                API.post("/api/group/new", {
+                    entry: v.data.currentids.join(","),
+                    timestamp: (new Date()).getTime(),
+                    title:v.data.title,
+                    desc:""
+                }).then(()=>{
+                    API.get("/api/syncbatch/kill-session")
+                })
+            })
+            
+        
+        }
+
+    }
 }
 
 function AddQuesNumToQBlock() {
@@ -200,7 +261,7 @@ function AddQuesNumToQBlock() {
 
 function isOriginal() {
 
-    if (window.location.pathname.includes("/shijuan/")) {
+    if (window.location.pathname.includes("/shijuan/")||window.location.pathname.includes("/papersearch")) {
         console.log("beg");
         let oop = []
         document.querySelectorAll(".item-td").forEach(o => {
@@ -231,6 +292,16 @@ function isOriginal() {
                     console.log(origCount, o, oopp.length)
 
                     o.querySelector(".test-sum").insertAdjacentHTML("beforeend", ` 原创数<em>${origCount}</em> (${Math.floor(origCount * 100 / oopp.length)}%)`)
+                    if(origCount == oopp.length){
+                        o.insertAdjacentHTML("afterbegin",`
+                        <div style="position: absolute;display: block;width: 20px;height: 100%;z-index: 10000000000;background-color: #ffd700b0;border-radius: 10px;box-shadow: gold 0 0 15px;left: -5px;"></div>`)
+                    }else if(origCount / oopp.length >0.9){
+                        o.insertAdjacentHTML("afterbegin",`
+                        <div style="position: absolute;display: block;width: 10px;height: 100%;z-index: 10000000000;background-color: #ffd700b0;border-radius: 5px;left: -5px;"></div>`)
+                    }else if(origCount / oopp.length >0.5){
+                        o.insertAdjacentHTML("afterbegin",`
+                        <div style="position: absolute;display: block;width: 10px;height: 100%;z-index: 10000000000;background-color: #9f9d033d;border-radius: 5px;left: -5px;"></div>`)
+                    }
 
                 })
 

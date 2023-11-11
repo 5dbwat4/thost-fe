@@ -1,13 +1,14 @@
-function normalizeqCopy(q){
+function normalizeqWordTailored(q,Nopt){
     const ool=document.createElement("div")
     q=q.replaceAll("【题文】","")
     ool.innerHTML=q
 
-    ool.querySelectorAll("img").forEach(async(v)=>{
+    ool.querySelectorAll("img").forEach(v=>{
         if(v.src.includes("/formula/")){
-            // v.src=v.src.replace(".png",".svg")
-            fetch(v.src.replace("https://staticzujuan.xkw.com/quesimg/Upload/formula/",API.host+"/api/xkw-helper/route-formula-svg/").replace(".svg",""))
+            v.src=v.src.replace(".png",".svg")
             v.style.width=(v.width*.8)+"px"
+            v.setAttribute("width",(v.width*.8))
+            v.setAttribute("height","")
         }
         if(v.src.includes("/dksih/")){
             let tmp=/\?resizew=(\d*)/.exec(v.src)
@@ -17,6 +18,11 @@ function normalizeqCopy(q){
                 v.setAttribute("width",tmp[1])
                 v.setAttribute("height","")
             }
+    //         v.outerHTML=`
+        
+    //         <div style="width: fit-content;display: inline-block;text-align: center;" class="__ccccimage">${v.outerHTML}
+    // <p style="margin: 0 0;font-family: kaiti;">（第${Nopt.tindex}题图）</p></div>`
+            v.setAttribute("data-pictid",Nopt.tindex)
         }
     })
 
@@ -25,12 +31,12 @@ function normalizeqCopy(q){
         if(!v.style.fontFamily){
             v.style.fontFamily="Times New Roman , 宋体"
         }
-        // if(!v.style.fontSize){
-        //     v.style.fontSize="9.5pt"
-        // }
+        if(!v.style.fontSize){
+            v.style.fontSize="9.5pt"
+        }
 
         // v.style.lineHeight="12pt"
-        // v.style.margin="0px"
+        v.style.margin="0px"
     })
 
 
@@ -51,22 +57,22 @@ function normalizeqCopy(q){
 
     // })
     
-    // ool.querySelectorAll("table[name=optionsTable]").forEach(v=>{
-    //     if(v.querySelectorAll("td").length==4){
-    //         // console.log("oo",v);
-    //         let opts=[],lns=1
-    //         v.querySelectorAll("td").forEach(oo=>{
-    //             opts.push(oo.outerHTML)
-    //         })
-    //         // v.addEventListener("click",()=>{
-    //         //     console.log("click");
-    //             const {ctn,next_lns}=toTable(opts,4)
-    //             v.innerHTML=ctn
-    //             // lns=next_lns
-    //         // })
-    //     }
+    ool.querySelectorAll("table[name=optionsTable]").forEach(v=>{
+        if(v.querySelectorAll("td").length==4){
+            // console.log("oo",v);
+            let opts=[],lns=1
+            v.querySelectorAll("td").forEach(oo=>{
+                opts.push(oo.outerHTML)
+            })
+            // v.addEventListener("click",()=>{
+            //     console.log("click");
+                const {ctn,next_lns}=toTable(opts,4)
+                v.innerHTML=ctn
+                // lns=next_lns
+            // })
+        }
 
-    // })
+    })
     // ool.querySelectorAll("table[name=optionsTable] td").forEach(v=>{
     //     if(!v.style.fontFamily){
     //         v.style.fontFamily="Times New Roman , 宋体"
@@ -83,13 +89,13 @@ function normalizeqCopy(q){
         if(!v.style.fontFamily){
             v.style.fontFamily="Times New Roman , 宋体"
         }
-        // if(!v.style.fontSize){
-        //     v.style.fontSize="9.5pt"
-        // }
+        if(!v.style.fontSize){
+            v.style.fontSize="9.5pt"
+        }
         // console.log(v.querySelector("span").clientWidth);
 
         // v.style.lineHeight="12pt"
-        // v.style.margin="0px"
+        v.style.margin="0px"
     })
 
     //18.76/4
@@ -110,13 +116,16 @@ function normalizeqCopy(q){
     // console.log(ool.innerHTML);
 
 // console.log(ool.outerHTML);
-// if(Nopt.includeti){
-//     console.log("rrr");
-//     ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}. </strong>`)
-// }
-// if(Nopt.gtittype==3){
-//     ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}.</strong> (${Nopt.ootInfo[0]},${Nopt.ootInfo[1]}) `)
-// }
+if(Nopt.includeti){
+    console.log("rrr");
+    ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}. </strong>`)
+}
+if(Nopt.gtittype==3){
+    ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}.</strong> (${Nopt.ootInfo[0]},${Nopt.ootInfo[1]}) `)
+}
+if(Nopt.gtittype==4){
+    ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}.</strong> `)
+}
     return ool.outerHTML
 }
 
@@ -133,4 +142,4 @@ function toTable(opts,lns){
     }
 }
 
-export{normalizeq}
+export{normalizeqWordTailored}

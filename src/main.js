@@ -22,6 +22,8 @@
         {path:"/grouping/preexport-1/:id",component: ()=>import("./views/grouping/preexport-1.vue")},
         {path:"/grouping/preexport/:id",component: ()=>import("./views/grouping/preexport.vue")},
         {path:"/grouping/preexport-2/:id",component: ()=>import("./views/grouping/preexport-2.vue")},
+        {path:"/grouping/preexport-1/:id/word_tailored_version",component: ()=>import("./views/grouping/word_version/preexport-1.vue")},
+        {path:"/grouping/preexport-2/:id/word_tailored_version",component: ()=>import("./views/grouping/word_version/preexport-2.vue")},
         {path:"/export/:i",component: ()=>import("./views/grouping/export.vue")},
         {path:"/export/:id/a",component: ()=>import("./views/grouping/export.a.vue")},
         {path:"/regener",component: ()=>import("./views/regener/index.vue")},

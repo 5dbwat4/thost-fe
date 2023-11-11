@@ -1,12 +1,13 @@
 <template>
-<n-input placeholder="Search" v-model:value="search" /><n-button @click="handleSearch">SEARCH</n-button>
+    <n-input-group>
+<n-input placeholder="Search" v-model:value="search" /><n-button @click="handleSearch">SEARCH</n-button></n-input-group>
 <n-data-table remote :loading="loadingData"
 :data="data" :columns="columns"
     @update:checked-row-keys="handleCheck" :row-key="(row)=>row.id" visual-scroll/>
 </template>
 
 <script setup>
-import { NButton, NDataTable } from "naive-ui";
+import { NButton, NDataTable,NInputGroup,NInput } from "naive-ui";
 import { h, ref } from "vue";
 import { API } from "../../shared/APIHelper"
 import {useRoute,useRouter} from "vue-router"

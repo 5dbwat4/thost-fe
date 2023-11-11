@@ -307,8 +307,8 @@ document.getElementById("coreop").addEventListener("mouseout",(e)=>{
 })
 document.getElementById("coreop").addEventListener("click",(e)=>{
     if(registeredEvents.value.bodyonclick=="cnaddline"){
-        if(e.target.nextElementSibling?.tagName=="BR"){
-            e.target.nextElementSibling.style.display="none"
+        if(e.nextElementSibling?.tagName=="BR"){
+            e.nextElementSibling.style.display="none"
         }
         e.target.insertAdjacentHTML("afterend",`
         <span style="display: block;

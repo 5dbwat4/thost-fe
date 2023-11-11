@@ -3,6 +3,7 @@
 <n-button class="noprint" @click="shown.a=!shown.a">A</n-button>
 <n-button class="noprint" @click="shown.p=!shown.p">P</n-button>
 <n-button @click="router.push('/grouping/preexport-1/'+route.params.id)">开始准备打印</n-button>
+<n-button @click="router.push('/grouping/preexport-1/'+route.params.id+'/word_tailored_version')">开始准备优化并嵌入Word</n-button>
 <n-button @click="router.push('/export/'+route.params.id+'/a')">打印答案</n-button>
 <n-button @click="markAsDoneAll">将本group内所有试题标记为done</n-button>
     <n-checkbox v-model:checked="displayADirectly" @update:checked="handledisplayADirectlyCheckedChange">
@@ -25,13 +26,15 @@
 <div v-if="shown.p&&!displayADirectly"><img :src='API.host+"/oss-storage/"+oo.a.replace("<answerparser>","").replace("</answerparser>","").split("|")[1]+".png"'/></div>
 <div v-if="displayADirectly">
 
-         <n-image  lazy :src="(XKWGetFile[oo.id]||{a:''}).a" :width="700"><template #placeholder><n-spin/></template></n-image>
-         <n-image  lazy :src="(XKWGetFile[oo.id]||{p:''}).p" :width="700"><template #placeholder><n-spin/></template></n-image>
+         <n-image v-if="shown.a||showTL[oo.id]" lazy :src="(XKWGetFile[oo.id]||{a:''}).a" :width="700"><template #placeholder><n-spin/></template></n-image>
+         <n-image  v-if="shown.a||showTL[oo.id]" lazy :src="(XKWGetFile[oo.id]||{p:''}).p" :width="700"><template #placeholder><n-spin/></template></n-image>
 
         <div>
     </div></div>
 <n-button text @click="markAsDone(oo)">标记为已完成</n-button>
-<n-p>完成状态：{{doneinfo[oo.id]}}</n-p>
+<n-text>完成状态：{{doneinfo[oo.id]}}</n-text>
+<n-button @click="showTL[oo.id]=true">显示本题答案</n-button>
+
 </div>
 </div>          </n-image-group></div>
 
@@ -43,7 +46,7 @@ import { onMounted, ref } from "vue"
 import {useRoute,useRouter} from "vue-router"
 const route=useRoute(),router=useRouter()
 
-import {NButton,NCheckbox,NP,NSpin,NImage,NImageGroup} from "naive-ui"
+import {NButton,NCheckbox,NP,NSpin,NImage,NImageGroup,NText} from "naive-ui"
 
 import {normalizeq} from "../../shared/nomorlize_q"
 import {qtypes} from "../../shared/define_basic_qtypes"
@@ -54,6 +57,8 @@ const shown=ref({
     a:false,
     p:false
 })
+
+const showTL=ref({})
 
 const Noptions_ret2=ref(false)
 const grouptitle=ref("")
@@ -153,6 +158,10 @@ if(displayADirectly.value){
         display: none;
     }
 
+}
+
+.noprint{
+    user-select: none;
 }
 
 /* .labi-container{
