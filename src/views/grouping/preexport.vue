@@ -87,7 +87,7 @@
 
     import {
         normalizeq
-    } from "../../shared/nomorlize_q"
+    } from "../../shared/normalize_q/toScreenDisplay"
     import {qtypes} from "../../shared/define_basic_qtypes"
 
     import {

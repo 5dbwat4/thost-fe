@@ -593,3 +593,33 @@ td{
 }
 
 </style>
+
+<!-- <style src="../../../shared/zujuan-stupid-style-inject.css"/> -->
+<style scoped>
+wave {
+    text-decoration-style: wavy;
+    text-decoration-line: underline;
+    text-underline-position: auto;
+    /* white-space: pre-wrap; */
+}
+
+dot{
+    position: relative;
+    text-emphasis-style: dot;
+    text-emphasis-position: under left;
+    text-emphasis-color: inherit;
+    box-sizing: border-box;
+    padding-top: .25rem
+}
+
+u {
+    text-decoration: underline;
+    text-underline-position: under;
+    white-space: break-spaces
+}
+
+span>em {
+    font-style: normal;
+    font-weight: bold;
+}
+</style>

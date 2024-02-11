@@ -3,6 +3,7 @@
         <n-p>图片处理 Current Function:{{ registeredEvents.imageonclick }} <n-button text @click="registeredEvents.imageonclick='none'">Reset</n-button></n-p>
 <n-button class="noprint" type="success" @click="registeredEvents.imageonclick='imageresize'">图片大小</n-button>
 <n-button class="noprint" type="success" @click="registeredEvents.imageonclick='deleteNum'">删除图片下方的题号</n-button>
+<n-button class="noprint"  @click="deleteInlinePicNum">删除行内图片下方的题号</n-button>
 <n-button class="noprint" @click="picreset()">Picture Reset</n-button>
 <n-button class="noprint"  type="success" @click="registeredEvents.imageonclick='picreset'">Selected Picture Reset dbclick to do</n-button>
 
@@ -25,7 +26,11 @@
 <n-button class="noprint" type="success" @click="optablereset()">Optable Reset</n-button>
 <n-button class="noprint" type="success" @click="wordwrap()">WordBreak</n-button>
 <n-divider/>
+<!-- <n-p>快速处理</n-p>
+<n-button class="noprint" type="success" @click="reformatEnglish()">英语套卷</n-button>
+<n-divider/> -->
 <n-button class="noprint"  type="success" @click="op2change()">导出页</n-button>
+<n-button class="noprint"  type="success" @click="op2PDFPage()">导出页</n-button>
 <n-button class="noprint" @click="showPagePagenation=!showPagePagenation">Toggle sPP</n-button>
 <!-- <div v-for="ev in registeredEvents">
 <span>{{ev.name}}</span><n-button text @click="ev.destory">Destroy</n-button>
@@ -49,6 +54,7 @@ onMounted(()=>{
 
 
 import {useRoute,useRouter} from "vue-router"
+import { API } from "../../shared/APIHelper";
 const route=useRoute(),router=useRouter()
 
 const showPagePagenation=ref(true)
@@ -70,7 +76,8 @@ const wordwrap=()=>{
     })
 }
 onMounted(()=>{
-
+    deleteUnnecessaryBRs()
+    optablereset()
 
 
 //imageresize
@@ -357,7 +364,7 @@ const blankretheme3=()=>{
 }
 const betterfoENMain=()=>{
     document.querySelectorAll(".___core_block").forEach(dom=>{
-        if(dom.attributes.data_type.nodeValue=="阅读理解"){
+        if(dom.attributes.data_type.nodeValue=="阅读选择"){
 
             console.log("hdn yd",dom);
         dom.innerHTML=dom.innerHTML.replaceAll(/【小题(\d*)】/g,"$1.")
@@ -418,7 +425,17 @@ const betterfoENMain=()=>{
 
     const op2change = () => {
         localStorage.setItem("___thost___html_export", document.getElementById("corehtml").outerHTML)
-        router.push("/export/"+route.params.id)
+        API.post("/api/group/exported/"+route.params.id,{
+            htmlcode:document.getElementById("corehtml").outerHTML
+        })
+        router.push("/paper/"+route.params.id)
+    }
+    const op2PDFPage = () => {
+        localStorage.setItem("___thost___html_export", document.getElementById("corehtml").outerHTML)
+        API.post("/api/group/exported/"+route.params.id,{
+            htmlcode:document.getElementById("corehtml").outerHTML
+        })
+        router.push("/paper/"+route.params.id+"/pdf")
     }
 
 
@@ -523,6 +540,13 @@ const deleteUnnecessaryBRs=()=>{
             ee.parentNode.removeChild(ee)
         }
     })
+    document.querySelectorAll("p").forEach(ee=>{
+        if(ee.lastElementChild?.tagName=="BR"&&
+        ee.lastElementChild?.previousElementSibling?.tagName=="BR"){
+            ee.removeChild(ee.lastElementChild.previousElementSibling)
+            ee.removeChild(ee.lastElementChild)
+        }
+    })
     document.getElementById("coreop").querySelectorAll("br").forEach(vv=>{
         if(vv.nextSibling?.tagName=="BR"){
             vv.nextSibling.style.display="none"
@@ -533,6 +557,26 @@ const deleteUnnecessaryBRs=()=>{
                 vv.parentNode.removeChild(vv)
             }
     })
+}
+
+const deleteInlinePicNum=()=>{
+    document.querySelectorAll("td .__ccccimage").forEach(v=>{
+        v.querySelector("p").style.display="none"
+    })
+
+    document.querySelectorAll(".__ccccimage").forEach(v=>{
+        if(v.previousElementSibling?.tagName!="BR"
+        &&v.nextElementSibling?.tagName!="BR"
+        &&!v.previousElementSibling?.classList.contains("__ccccimage")
+        &&!v.nextElementSibling?.classList.contains("__ccccimage")){
+            v.querySelector("p").style.display="none"
+        }
+    })
+}
+
+
+const reformatEnglish=()=>{
+    betterfoENMain();deleteUnnecessaryBRs();optablereset()
 }
 </script>
 
@@ -562,7 +606,7 @@ table{
     border-bottom-width: 2px;
     position:relative;
     border-bottom-style: dotted;
-    text-align:right;
+    text-align:right;right: 30px;
 }
 
 /* img{ */
@@ -592,4 +636,34 @@ td{
     overflow-y: scroll;
 }
 
+</style>
+
+<!-- <style src="../../shared/zujuan-stupid-style-inject.css" /> -->
+<style scoped>
+wave {
+    text-decoration-style: wavy;
+    text-decoration-line: underline;
+    text-underline-position: auto;
+    /* white-space: pre-wrap; */
+}
+
+dot{
+    position: relative;
+    text-emphasis-style: dot;
+    text-emphasis-position: under left;
+    text-emphasis-color: inherit;
+    box-sizing: border-box;
+    padding-top: .25rem
+}
+
+u {
+    text-decoration: underline;
+    text-underline-position: under;
+    white-space: break-spaces
+}
+
+span>em {
+    font-style: normal;
+    font-weight: bold;
+}
 </style>

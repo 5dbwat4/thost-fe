@@ -23,7 +23,7 @@ import {API} from "../../shared/APIHelper"
 
 import {NButton} from "naive-ui"
 
-import {normalizeq} from "../../shared/nomorlize_q"
+import {normalizeq} from "../../shared/normalize_q/toScreenDisplay"
 
 const shown=ref({
     q:true,

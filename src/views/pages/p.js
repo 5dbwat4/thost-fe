@@ -241,8 +241,8 @@ await SAL_Main(0)
                     API.get("/api/syncbatch/kill-session")
                 })
             })
-            
-        
+
+
         }
 
     }
@@ -274,6 +274,8 @@ function isOriginal() {
                     method: "POST", body: JSON.stringify
                         ({ method: "GET", url: "/app-server/v1/paper/detail/" + ops[1] + "/" + ops[2] })
                 }).then(e => e.json()).then(o2 => {
+
+        
                     const oopp = o2.data.quesList
                     let origCount = 0
                     for (let icon = 0; icon < oopp.length; icon++) {
@@ -301,6 +303,20 @@ function isOriginal() {
                     }else if(origCount / oopp.length >0.5){
                         o.insertAdjacentHTML("afterbegin",`
                         <div style="position: absolute;display: block;width: 10px;height: 100%;z-index: 10000000000;background-color: #9f9d033d;border-radius: 5px;left: -5px;"></div>`)
+                    }
+
+
+                    //--------------------------------
+
+                    const paperSubmitTime=o2.data.time
+                    let now = new Date();
+                    let paperTime = new Date(paperSubmitTime);
+                    let diffTime = Math.abs(paperTime - now);
+                    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                    console.log(diffDays);
+                    o.querySelector(".view-sum").insertAdjacentHTML("beforeend", ` 日均<em>${Math.floor((diffDays==0?o2.data.readSum:(o2.data.readSum/diffDays))*10)/10}</em>`)
+                    if((diffDays==0?o2.data.readSum:(o2.data.readSum/diffDays))>40){
+                        o.querySelector(".view-sum").style.fontWeight=900
                     }
 
                 })

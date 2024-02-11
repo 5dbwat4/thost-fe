@@ -1,0 +1,141 @@
+[
+        {
+            
+            "value": -3,
+            "label": "高中",
+            "children": [
+                {
+                    "value": 10,
+                    "label": "语文"
+                },
+                {
+                    "value": 11,
+                    "label": "数学"
+                },
+                {
+                    "value": 12,
+                    "label": "英语"
+                },
+                {
+                    "value": 13,
+                    "label": "物理"
+                },
+                {
+                    "value": 14,
+                    "label": "化学"
+                },
+                {
+                    "value": 15,
+                    "label": "生物"
+                },
+                {
+                    "value": 16,
+                    "label": "政治"
+                },
+                {
+                    "value": 17,
+                    "label": "历史"
+                },
+                {
+                    "value": 18,
+                    "label": "地理"
+                },
+                {
+                    "value": 33,
+                    "label": "日语"
+                },
+                {
+                    "value": 27,
+                    "label": "信息技术"
+                },
+                {
+                    "value": 28,
+                    "label": "通用技术"
+                }
+            ]
+        },
+        {
+            
+            "value": -2,
+            "label": "初中",
+            "children": [
+                {
+                    "value": 1,
+                    "label": "语文",
+                    "selected": true
+                },
+                {
+                    "value": 2,
+                    "label": "数学"
+                },
+                {
+                    "value": 3,
+                    "label": "英语"
+                },
+                {
+                    "value": 4,
+                    "label": "物理"
+                },
+                {
+                    "value": 5,
+                    "label": "化学"
+                },
+                {
+                    "value": 6,
+                    "label": "生物"
+                },
+                {
+                    "value": 7,
+                    "label": "道德与法治"
+                },
+                {
+                    "value": 8,
+                    "label": "历史"
+                },
+                {
+                    "value": 9,
+                    "label": "地理"
+                },
+                {
+                    "value": 26,
+                    "label": "科学"
+                },
+                {
+                    "value": 29,
+                    "label": "信息技术"
+                },
+                {
+                    "value": 30,
+                    "label": "历史与社会"
+                }
+            ]
+        },
+        {
+            
+            "value": 1,
+            "label": "小学",
+            "children": [
+                {
+                    "value": 24,
+                    "label": "语文",
+                    "selected": true
+                },
+                {
+                    "value": 23,
+                    "label": "数学"
+                },
+                {
+                    "value": 25,
+                    "label": "英语"
+                },
+                {
+                    "value": 31,
+                    "label": "道德与法治"
+                },
+                {
+                    "value": 32,
+                    "label": "科学"
+                }
+            ]
+        }
+    ]

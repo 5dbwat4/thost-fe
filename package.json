@@ -10,23 +10,34 @@
   },
   "dependencies": {
     "@vicons/ionicons5": "^0.12.0",
-    "@vueuse/core": "^10.4.0",
+    "@vue/runtime-core": "^3.3.11",
+    "@vueuse/core": "^10.7.0",
     "@vueuse/sound": "^2.0.1",
-    "animejs": "^3.2.1",
+    "animejs": "^3.2.2",
+    "ant-design-vue": "^4.0.7",
     "aplayer": "^1.10.1",
     "calendar-graph": "^1.0.1",
+    "crypto-js": "^4.2.0",
+    "date-fns": "^2.30.0",
+    "filesize": "^10.1.0",
+    "highlight.js": "^11.9.0",
     "html-to-image": "^1.11.11",
-    "naive-ui": "^2.34.4",
+    "html2pdf.js": "^0.10.1",
+    "mammoth": "^1.6.0",
+    "naive-ui": "^2.37.3",
+    "pinia": "^2.1.7",
     "sweetalert": "^2.1.2",
-    "vditor": "^3.9.4",
+    "uuid": "^9.0.1",
+    "vditor": "^3.9.6",
     "vicons": "^0.0.1",
-    "vite-plugin-require": "^1.1.10",
-    "vite-plugin-top-level-await": "^1.3.1",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "vite-plugin-require": "^1.1.14",
+    "vite-plugin-top-level-await": "^1.4.1",
+    "vue": "^3.3.11",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
-    "vite": "^4.4.0"
+    "@vitejs/plugin-vue": "^4.5.2",
+    "unplugin-vue-components": "^0.25.2",
+    "vite": "^4.5.1"
   }
 }

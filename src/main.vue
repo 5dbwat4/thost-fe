@@ -2,7 +2,7 @@
     <n-notification-provider>
 
 <div v-if="AllowedEntry">
-<router-view/>
+        <router-view/>
 
 </div>
 <div v-else>

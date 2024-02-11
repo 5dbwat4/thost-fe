@@ -1,0 +1,3 @@
+function generateFullQBlock(qinfo){
+
+}

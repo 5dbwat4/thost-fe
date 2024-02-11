@@ -1,4 +1,6 @@
 <template>
+    <n-button @click="$router.push('/batching/from-basket')">从试题篮</n-button>
+
   <n-config-provider :hljs="hljs">
 <div v-if="syncbatchstartedStatusOnNetworking==0"><span>正在查询Syncbatch状态</span></div>
 

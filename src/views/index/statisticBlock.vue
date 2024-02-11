@@ -1,4 +1,5 @@
 <template>
+  
    <n-row>
     <n-col :span="2"><n-statistic @click="$router.push('/list?filter=subject&subject=10')" label="Chinese" :value="statistic_qcount.cn"></n-statistic>         </n-col>
     <n-col :span="2"><n-statistic @click="$router.push('/list?filter=subject&subject=11')" label="Math" :value="statistic_qcount.ma"></n-statistic>            </n-col>
@@ -6,7 +7,7 @@
     <n-col :span="2"><n-statistic @click="$router.push('/list?filter=subject&subject=13')" label="Physics" :value="statistic_qcount.ph"></n-statistic>         </n-col>
     <n-col :span="2"><n-statistic @click="$router.push('/list?filter=subject&subject=14')" label="Chemistry" :value="statistic_qcount.ch"></n-statistic>       </n-col> 
     <n-col :span="2"><n-statistic @click="$router.push('/list?filter=subject&subject=15')" label="Biology" :value="statistic_qcount.bi"></n-statistic>         </n-col>
-    <n-col :span="2"><n-statistic @click="$router.push('/list')" label="Total" :value="statistic_qcount.all"></n-statistic>          </n-col>
+    <n-col :span="2"><n-statistic @click="$router.push('/list')" label="总题量" :value="statistic_qcount.all"></n-statistic>          </n-col>
     </n-row>
 
     <div  id="Ts-svg-root"></div>

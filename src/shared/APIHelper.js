@@ -11,6 +11,12 @@ const API={
             _Notificate(url,"GET",e)
           })
     },
+    /**
+     * 
+     * @param {String} url URL
+     * @param {{method:"GET"|"POST",body:JSON|undefined,url:String}} body 
+     * @returns 
+     */
     post:async(url,body)=>{APICallCount.value++,APICallRemains.value++
       CheckAPICallN()
         return await fetch(localStorage.getItem("__5dbwat_proj__thost_apihost")+url,{"method":"POST","body":JSON.stringify(body),"headers":{"Content-Type":"application/json"}, credentials:"include" }).then(v=>{
@@ -63,9 +69,9 @@ const initAPINotif=()=>{
 const CheckAPICallN=()=>{
   // const notification=useNotification()
   if(APICallRemains.value==0){
-    console.log("jk1000");
+    // console.log("jk1000");
     timeoutId=setTimeout(()=>{
-      console.log("jk2000");
+      // console.log("jk2000");
       if(___currentHasNtf){
         ntf.value.destroy()
         ___currentHasNtf=false
@@ -73,7 +79,7 @@ const CheckAPICallN=()=>{
     },500)
     // console.log(timeoutId);
   }else{
-    console.log("jk3",ntf.value);
+    // console.log("jk3",ntf.value);
     if(!___currentHasNtf){
       if(timeoutId!=0)clearTimeout(timeoutId)
       ntf.value=notification.create({
