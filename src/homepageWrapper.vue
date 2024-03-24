@@ -92,6 +92,11 @@ label: "题目",
 key: "exam",
 icon: renderIcon( DocumentsOutline),
 children: [
+{
+    label: RenderRouterLinkA("错题本","/mistakes_coll"),
+    key: "do-mistcall",
+    icon: renderIcon(ReceiptOutline),
+  },
   {
     label: RenderRouterLinkA("题单","/grouping/list"),
     key: "do-ques",

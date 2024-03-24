@@ -1,0 +1,110 @@
+[
+    {
+        "value": 0,
+        "label": "全部类型",
+        "placeholder": "类型",
+        "selected": true
+    },
+    {
+        "value": 1,
+        "label": "课时练习",
+        "placeholder": "课时练习",
+        "selected": false
+    },
+    {
+        "value": 2,
+        "label": "单元测试",
+        "placeholder": "单元测试",
+        "selected": false
+    },
+    {
+        "value": 3,
+        "label": "阶段练习",
+        "placeholder": "阶段练习",
+        "selected": false
+    },
+    {
+        "value": 4,
+        "label": "期中",
+        "placeholder": "期中",
+        "selected": false
+    },
+    {
+        "value": 5,
+        "label": "期末",
+        "placeholder": "期末",
+        "selected": false
+    },
+    {
+        "value": 6,
+        "label": "专题练习",
+        "placeholder": "专题练习",
+        "selected": false
+    },
+    {
+        "value": 7,
+        "label": "竞赛",
+        "placeholder": "竞赛",
+        "selected": false
+    },
+    {
+        "value": 8,
+        "label": "开学考试",
+        "placeholder": "开学考试",
+        "selected": false
+    },
+    {
+        "value": 9,
+        "label": "高考模拟",
+        "placeholder": "高考模拟",
+        "selected": false
+    },
+    {
+        "value": 12,
+        "label": "高考真题",
+        "placeholder": "高考真题",
+        "selected": false
+    },
+    {
+        "value": 15,
+        "label": "学业考试",
+        "placeholder": "学业考试",
+        "selected": false
+    },
+    {
+        "value": 20,
+        "label": "零模",
+        "placeholder": "零模",
+        "selected": false
+    },
+    {
+        "value": 21,
+        "label": "一模",
+        "placeholder": "一模",
+        "selected": false
+    },
+    {
+        "value": 22,
+        "label": "二模",
+        "placeholder": "二模",
+        "selected": false
+    },
+    {
+        "value": 23,
+        "label": "三模",
+        "placeholder": "三模",
+        "selected": false
+    },
+    {
+        "value": 24,
+        "label": "模拟预测",
+        "placeholder": "模拟预测",
+        "selected": false
+    },
+    {
+        "value": 31,
+        "label": "课前预习",
+        "placeholder": "课前预习",
+        "selected": false
+    }
+]

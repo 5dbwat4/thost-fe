@@ -9,6 +9,7 @@
     <n-button @click="$router.push('/batching/syncbatch')">Sync batch</n-button>
     <n-button @click="$router.push('/zujuanink')">刷组卷网</n-button>
     <n-button @click="$router.push('/server-status')">服务器状态</n-button>
+    <n-button @click="$router.push('/func.danas/entry')">大数据选题（？）</n-button>
     <statistic-block/>
     <loginstate-block/>
      <div v-html="chunk1">
@@ -27,11 +28,6 @@ import loginstateBlock from "./loginstatusCheck.vue"
 const chunk1=marked(`
 你正在使用 thost v3 .
 
-## TO-DO List
-
-1. 错题集功能
-2. local & zxxk 本地资源管理功能
-3. preexport 表格除掉width
 `)
 
 </script>

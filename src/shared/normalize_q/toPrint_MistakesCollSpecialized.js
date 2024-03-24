@@ -31,9 +31,9 @@ function normalizeq(q,Nopt){
             }
             v.outerHTML=`
         
-            <div style="width: fit-content;display: inline-block;text-align: center;" data-belongsto="${Nopt.tindex-1}" class="__ccccimage">${v.outerHTML}
+            <div style="width: fit-content;display: inline-block;text-align: center;" class="__ccccimage">${v.outerHTML}
     <p style="margin: 0 0;font-family: kaiti;">（第${Nopt.tindex}题图）</p></div>`
-            // v.setAttribute("data-pictid",Nopt.tindex)
+            v.setAttribute("data-pictid",Nopt.tindex)
         }
     })
 
@@ -163,64 +163,64 @@ ool.querySelectorAll("bk[type=underline]").forEach(
     }
 })
 
-if(Nopt.nqtype==0||Nopt.nqtype==3){
+// if(Nopt.nqtype==0||Nopt.nqtype==3){
     ool.insertAdjacentHTML("afterbegin",` (${quesTypeList[""+Nopt.q0b.bankid][""+Nopt.q0b.type]},${diffMap[""+Nopt.q0b.diff]}(${Nopt.q0b.diff})) `)
-}
+// }
 
 
-if(Nopt.nqtype==0||Nopt.nqtype==3||Nopt.nqtype==5){
+// if(Nopt.nqtype==0||Nopt.nqtype==3||Nopt.nqtype==5){
     // console.log("rrr");
     ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}. </strong>`)
-}
+// }
 
 
 
-if(Nopt.q0b.type==2809){
-    console.log("oooo0");
-    ool.querySelectorAll("bk u").forEach(v=>{
-        v.innerHTML=v.innerHTML.replace(/【小题(\d*)】/,"$1.______________")
-        v.outerHTML=v.outerHTML.replace("<u>","<span>").replace("</u>","</span>")
-    })
-    ool.innerHTML=ool.innerHTML.replaceAll(/【小题(\d*)】/g,"$1.")
-}
-if(Nopt.q0b.type==280901){
-    ool.innerHTML=ool.innerHTML.replaceAll(/【小题(\d*)】/g,"$1.")
-}
-if(Nopt.q0b.type==280902){
-    ool.querySelectorAll("bk u").forEach(v=>{
-        v.innerHTML=v.innerHTML.replace(/【小题(\d*)】/,"$1.______________")
-        v.outerHTML=v.outerHTML.replace("<u>","<span>").replace("</u>","</span>")
-    })
-}
+// if(Nopt.q0b.type==2809){
+//     console.log("oooo0");
+//     ool.querySelectorAll("bk u").forEach(v=>{
+//         v.innerHTML=v.innerHTML.replace(/【小题(\d*)】/,"$1.______________")
+//         v.outerHTML=v.outerHTML.replace("<u>","<span>").replace("</u>","</span>")
+//     })
+//     ool.innerHTML=ool.innerHTML.replaceAll(/【小题(\d*)】/g,"$1.")
+// }
+// if(Nopt.q0b.type==280901){
+//     ool.innerHTML=ool.innerHTML.replaceAll(/【小题(\d*)】/g,"$1.")
+// }
+// if(Nopt.q0b.type==280902){
+//     ool.querySelectorAll("bk u").forEach(v=>{
+//         v.innerHTML=v.innerHTML.replace(/【小题(\d*)】/,"$1.______________")
+//         v.outerHTML=v.outerHTML.replace("<u>","<span>").replace("</u>","</span>")
+//     })
+// }
 
-if(Nopt.q0b.type==2808){
-    ool.querySelectorAll("span").forEach(v=>{
-        v.innerHTML=v.innerHTML.replace(/【小题(\d*)】/,"$1.")
-    })
-    ool.querySelectorAll("bk").forEach(v=>{
-        v.style="text-decoration: underline black;"
-        v.outerHTML="<span style='text-decoration: underline black;'>&nbsp;&nbsp;&nbsp;"+v.attributes.index.nodeValue+"&nbsp;&nbsp;&nbsp;</span>"
+// if(Nopt.q0b.type==2808){
+//     ool.querySelectorAll("span").forEach(v=>{
+//         v.innerHTML=v.innerHTML.replace(/【小题(\d*)】/,"$1.")
+//     })
+//     ool.querySelectorAll("bk").forEach(v=>{
+//         v.style="text-decoration: underline black;"
+//         v.outerHTML="<span style='text-decoration: underline black;'>&nbsp;&nbsp;&nbsp;"+v.attributes.index.nodeValue+"&nbsp;&nbsp;&nbsp;</span>"
         
-    })
-    // ool.querySelectorAll("table[name=optionsTable]").forEach(v=>{
-    //     // console.log(v.previousElementSibling.offsetwidth);
-    //     v.style.width="calc(100% - "+16+"px)"
-    //     v.previousElementSibling.style.display="inline-block"
-    //     v.parentElement.style.display="block"
-    //     // v.parentElement.style.height="15.2px"
-    //     v.style.display="inline-table"
-    //     v.style.verticalAlign="middle"
-    //     // v.style.borderCollapse="collapse"
-    // })
-}
+//     })
+//     // ool.querySelectorAll("table[name=optionsTable]").forEach(v=>{
+//     //     // console.log(v.previousElementSibling.offsetwidth);
+//     //     v.style.width="calc(100% - "+16+"px)"
+//     //     v.previousElementSibling.style.display="inline-block"
+//     //     v.parentElement.style.display="block"
+//     //     // v.parentElement.style.height="15.2px"
+//     //     v.style.display="inline-table"
+//     //     v.style.verticalAlign="middle"
+//     //     // v.style.borderCollapse="collapse"
+//     // })
+// }
 
-if(Nopt.q0b.type==281302){
-    ool.querySelectorAll("bk u").forEach(v=>{
-        v.innerHTML=v.innerHTML.replace(/【小题(\d*)】/,` <span>$1.</span><span style="color: lightgray;
-  font-size: 13.5pt;">__________________</span> `)
-        v.outerHTML=v.outerHTML.replace("<u>","<span>").replace("</u>","</span>")
-    })
-}
+// if(Nopt.q0b.type==281302){
+//     ool.querySelectorAll("bk u").forEach(v=>{
+//         v.innerHTML=v.innerHTML.replace(/【小题(\d*)】/,` <span>$1.</span><span style="color: lightgray;
+//   font-size: 13.5pt;">__________________</span> `)
+//         v.outerHTML=v.outerHTML.replace("<u>","<span>").replace("</u>","</span>")
+//     })
+// }
 
 // if(Nopt.gtittype==4){
 //     ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}. </strong> `)

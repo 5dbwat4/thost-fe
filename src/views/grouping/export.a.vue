@@ -13,6 +13,7 @@
   <n-button @click="OCRAllSelective()" class="noprint"
     >OCR all selective</n-button
   >
+  <!-- <n-p class="noprint">Current Heap Height:{{  }}</n-p> -->
   <div :style="{ width: '18.76cm', 'line-height': 'normal' }" id="oonom">
     <div class="noprint">
       <!-- <div class="labi-container">

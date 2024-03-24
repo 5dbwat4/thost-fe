@@ -3,9 +3,12 @@
         <n-p>图片处理 Current Function:{{ registeredEvents.imageonclick }} <n-button text @click="registeredEvents.imageonclick='none'">Reset</n-button></n-p>
 <n-button class="noprint" type="success" @click="registeredEvents.imageonclick='imageresize'">图片大小</n-button>
 <n-button class="noprint" type="success" @click="registeredEvents.imageonclick='deleteNum'">删除图片下方的题号</n-button>
+<n-button class="noprint" @click="registeredEvents.imageonclick='floatRight'">图片漂浮</n-button>
+<n-button class="noprint" @click="registeredEvents.opttabelonclick='filla'">表格fill-available</n-button>
 <n-button class="noprint"  @click="deleteInlinePicNum">删除行内图片下方的题号</n-button>
 <n-button class="noprint" @click="picreset()">Picture Reset</n-button>
 <n-button class="noprint"  type="success" @click="registeredEvents.imageonclick='picreset'">Selected Picture Reset dbclick to do</n-button>
+<n-button class="noprint"  type="success" @click="removeUnnecessaryTPicNums">删除多余的题图标记</n-button>
 
 <n-divider/>
 <n-p>试题块处理 Current Function:{{ registeredEvents.blockonclick }} <n-button text @click="registeredEvents.blockonclick='none'">Reset</n-button></n-p>
@@ -13,6 +16,8 @@
 <n-button class="noprint" type="success" @click="registeredEvents.bodyonclick='cnaddline';">语文：添加横线</n-button>
 <n-divider/>
 <n-p>全文处理</n-p>
+<n-p>Blank处理 Current Function:{{ registeredEvents.bkonclick }} <n-button text @click="registeredEvents.bkonclick='none'">Reset</n-button></n-p>
+<n-p>Table处理 Current Function:{{ registeredEvents.tableonclick }} <n-button text @click="registeredEvents.tableonclick='none'">Reset</n-button></n-p>
 <n-button class="noprint" type="success" @click="deleteUnnecessaryBRs()">删除多余换行</n-button>
 <n-button class="noprint" @click="registeredEvents.bodyonclick='deletedom';registeredEvents.imageonclick='none';registeredEvents.bkonclick='none'">删除选中DOM</n-button>
 <n-button class="noprint" @click="blankretheme1">Blank retheme X._______</n-button>
@@ -21,7 +26,9 @@
 <n-button class="noprint" type="success" @click="betterfoENMain">OtherFormatter EN</n-button>
 <n-button class="noprint" @click="Extendblank">Extendblank</n-button>
 <n-button class="noprint" type="success" @click="registeredEvents.bkonclick='extentblank'">Extendblankwhenclick</n-button>
+<n-button class="noprint" type="success" @click="registeredEvents.tableonclick='tablerewidth'">表格取消宽度</n-button>
 <n-button class="noprint" @click="detable">Destroy table</n-button>
+<n-button class="noprint" @click="registeredEvents.blockonclick='addpage'">添加分页符</n-button>
 
 <n-button class="noprint" type="success" @click="optablereset()">Optable Reset</n-button>
 <n-button class="noprint" type="success" @click="wordwrap()">WordBreak</n-button>
@@ -64,7 +71,9 @@ const registeredEvents=ref({
     imageonclick:"none",
     bkonclick:"none",
     bodyonclick:"none",
-    blockonclick:"none"
+    blockonclick:"none",
+    tableonclick:"none",
+    opttabelonclick:"none"
 })
 
 
@@ -129,7 +138,75 @@ onMounted(()=>{
 
 })();
 
+;(()=>{
+        /**
+     * 
+     * @param {MouseEvent} e 
+     */
+    const _runresize=(e)=>{
+        if(registeredEvents.value.imageonclick=="floatRight"){
+        // console.log(e.target)
+        console.log("here");
+        e.target.parentNode.style.float="right"
+        e.target.parentNode.style.clear="both"
+        let o=e.target.parentNode
+        if(o.previousSibling.tagName=="BR")o.parentNode.removeChild(o.previousSibling)
+        
+    }
+    }
+    /**
+     * 
+     * @param {MouseEvent} e 
+     */
+    const _runresizeR=(e)=>{
+        if(registeredEvents.value.imageonclick=="imageresize"){
+        // console.log(e.target)
+        e.preventDefault()
+        if(!e.target.dataset.width)e.target.dataset.width=e.target.width
+        e.target.dataset.width=parseInt(e.target.dataset.width)+8
+        e.target.style.width=e.target.dataset.width+"px"
+        e.target.width=e.target.dataset.width
+    }
+    }
+    let ool=document.getElementById("coreop")
+     ool.querySelectorAll("img").forEach(v=>{
+        if(v.src.includes("/dksih/")){
+            v.addEventListener("click",_runresize)
+            // v.addEventListener("contextmenu",_runresizeR)
+        }
+     })
+})();
 
+
+;(()=>{
+    const _runresize=(e,tgd)=>{
+        console.log("tgd");
+        if(registeredEvents.value.opttabelonclick=="filla"){
+        console.log(e)
+        console.log("tgd2");
+        tgd.style.width="-webkit-fill-available"
+        
+    }
+    }
+    /**
+     * 
+     * @param {MouseEvent} e 
+     */
+    const _runresizeR=(e)=>{
+        if(registeredEvents.value.imageonclick=="imageresize"){
+        // console.log(e.target)
+        e.preventDefault()
+        if(!e.target.dataset.width)e.target.dataset.width=e.target.width
+        e.target.dataset.width=parseInt(e.target.dataset.width)+8
+        e.target.style.width=e.target.dataset.width+"px"
+        e.target.width=e.target.dataset.width
+    }
+    }
+    let ool=document.getElementById("coreop")
+     ool.querySelectorAll("table[name=optionsTable]").forEach(v=>{
+            v.addEventListener("click",((v)=>{return (e)=>{_runresize(e,v)}})(v))
+     })
+})();
 //extentblank
 ;(()=>{
     const _runre=(e)=>{
@@ -151,6 +228,31 @@ onMounted(()=>{
      ool.querySelectorAll("bk").forEach(v=>{
             v.addEventListener("click",_runre)
             v.addEventListener("contextmenu",_runreR)
+
+     })
+
+})();
+
+
+//add-page
+;(()=>{
+    const _runre=(e,dom)=>{
+        if(registeredEvents.value.blockonclick=="addpage"){
+dom.style.breakAfter="page"
+    }
+    }
+    const _runreR=(e,dom)=>{
+        if(registeredEvents.value.blockonclick=="addpage"){
+            e.preventDefault()
+        if(e.target.innerText.includes("_")){
+            e.target.innerText=(new Array(e.target.innerText.length-5)).join("_")
+        }
+    }
+    }
+    let ool=document.getElementById("coreop")
+     ool.querySelectorAll(".___core_block").forEach(v=>{
+            v.addEventListener("click",((dom)=>{return (e)=>{_runre(e,dom)}})(v))
+            v.addEventListener("contextmenu",((dom)=>{return (e)=>{_runreR(e,dom)}})(v))
 
      })
 
@@ -331,6 +433,40 @@ document.getElementById("coreop").addEventListener("click",(e)=>{
 })();
 
 
+//table-rewidth
+;(()=>{
+    /**
+     * 
+     * @param {MouseEvent} e 
+     */
+    const _runTRW=(e,dom)=>{
+        if(registeredEvents.value.tableonclick=="tablerewidth"){
+            console.log(e,dom);
+            dom.style.width="unset"
+    }
+    }
+    let ool=document.getElementById("coreop")
+     ool.querySelectorAll("table").forEach(v=>{
+            v.addEventListener("click",((dom)=>{return (e)=>{_runTRW(e,dom)}})(v))
+
+     })
+})();
+
+//imageMaxSizeLimit
+
+;(()=>{
+    //detect width
+    const maxWidth=document.getElementById("corehtml").firstElementChild.clientWidth
+    let ool=document.getElementById("coreop")
+     ool.querySelectorAll("img").forEach(v=>{
+        if(v.src.includes("/dksih/")){
+            if(parseInt(v.style.width)>=maxWidth){
+            if(!v.dataset.width)v.dataset.width=maxWidth
+        v.style.width=maxWidth+"px"}
+        }
+     })
+})();
+
 })
 
 const blankretheme1=()=>{
@@ -423,6 +559,23 @@ const betterfoENMain=()=>{
     })
 }
 
+const removeUnnecessaryTPicNums=()=>{
+    document.querySelectorAll(".___core_block").forEach(os=>{
+        let flag=true
+        os.querySelectorAll(".__ccccimage").forEach(pic=>{
+            if(pic.getAttribute("data-belongsto")&&parseInt(pic.getAttribute("data-belongsto"))!=parseInt(os.getAttribute("data_id"))){
+                flag=false
+            }
+        })
+        if(flag){
+            os.querySelectorAll(".__ccccimage").forEach(pic=>{
+            pic.querySelector("p").style.display="none"
+            })
+        }
+    })
+}
+
+
     const op2change = () => {
         localStorage.setItem("___thost___html_export", document.getElementById("corehtml").outerHTML)
         API.post("/api/group/exported/"+route.params.id,{
@@ -513,13 +666,18 @@ const optablereset=()=>{
         return "<tbody><tr>"+opts.join("</tr><tr>")+"</tr></tbody>"
     }
 }
+
+
     document.getElementById("coreop").querySelectorAll("table[name=optionsTable]").forEach(v=>{
         let ops=[],maxw=0
         v.querySelectorAll("td").forEach(oo=>{
                 maxw=Math.max(maxw,oo.querySelector("span").clientWidth)
                 ops.push(oo.outerHTML)
             })
+
+
             console.log(maxw);
+            if(ops.length==4){
         if(maxw>=v.clientWidth/2){
 
         }else if(maxw>=v.clientWidth/4){
@@ -529,6 +687,13 @@ const optablereset=()=>{
             v.innerHTML=toTable(ops,1)
             console.log(4);
         }
+    }else{
+        if(maxw<v.clientWidth/ops.length){
+            v.innerHTML="<tbody><tr>"+ops.join("")+"</tr></tbody>"
+        }else{
+            v.innerHTML="<tbody><tr>"+ops.join("</tr><tr>")+"</tr></tbody>"
+        }
+    }
         // console.log(v.innerHTML);
         
     })

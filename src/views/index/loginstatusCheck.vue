@@ -10,9 +10,10 @@ import { NButton } from "naive-ui";
 
 
 const loginStates=ref("")
-API.post("/api/xkw-helper/____sensitive/get_zujuan_app_content",{
-    method:"GET",url:"/app-server/v1/user/info"
-}).then(vv=>{
+// API.post("/api/xkw-helper/____sensitive/get_zujuan_app_content",{
+//     method:"GET",url:"/app-server/v1/user/info"
+// }).then(vv=>{
+API.get("/api/xkw-helper/relay-proxy/get/user/info").then(vv=>{
   if(vv.code!=0){
     loginStates.value="未登录或登录失效"
   }else{

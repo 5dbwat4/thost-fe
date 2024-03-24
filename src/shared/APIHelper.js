@@ -101,7 +101,7 @@ const _Notificate=(url,me,e)=>{
     notification.error({
       content: 'Network error.',
       closable: true,
-      meta:`Network error when ${me} [${url}].error:${e} <a href="${API.host}${url}" target="_blank">Detail</a>`
+      meta:`Network error when ${me} [${url}].error:${e} `
       // duration:3000
     })
   }

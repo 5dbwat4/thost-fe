@@ -30,6 +30,7 @@ import { API } from '../../shared/APIHelper';
     const saveGroupLoading=ref(false),groupsaved=ref(false),groupid=ref("")
     const enterRoom=async()=>{
         ZujuanAPI("/app-server/v1/basket/"+bankid.value).then(async(v)=>{
+        // API.get("/app-server/v1/basket/"+bankid.value).then(async(v)=>{
             let TL=[]
             v.data.structure.forEach(r=>{
                 TL.push(...r.list)

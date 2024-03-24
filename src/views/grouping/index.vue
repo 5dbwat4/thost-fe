@@ -1,21 +1,25 @@
+<!-- @format -->
+
 <template>
+  <n-back-top></n-back-top>
+  <n-button-group>
   <n-button class="noprint" @click="shown.q = !shown.q">Q</n-button>
-  <n-button class="noprint" @click="shown.a = !shown.a">A</n-button>
-  <n-button class="noprint" @click="shown.p = !shown.p">P</n-button>
+  <!-- <n-button class="noprint" @click="shown.a = !shown.a">A</n-button>
+  <n-button class="noprint" @click="shown.p = !shown.p">P</n-button> -->
+  <n-button class="noprint" @click="getAllAP">显示全部答案解析</n-button>
   <n-button
     class="noprint"
     @click="router.push('/grouping/preexport-1/' + route.params.id)"
     >开始准备打印</n-button
   >
-  <n-button
-    class="noprint"
-    @click="
-      router.push(
-        '/grouping/preexport-1/' + route.params.id + '/word_tailored_version'
-      )
-    "
-    >开始准备优化并嵌入Word</n-button
-  >
+  <n-dropdown :options="MorePrintOptions">
+      <n-button>
+      <template #icon>
+        <n-icon :component="EllipsisVerticalOutline"></n-icon>
+      </template>
+    </n-button>
+  </n-dropdown>
+
   <n-button
     class="noprint"
     @click="router.push('/export/' + route.params.id + '/a')"
@@ -26,16 +30,17 @@
     @click="router.push('/grouping/rename/' + route.params.id)"
     >修改命名</n-button
   >
-  <n-button class="noprint" @click="markAsDoneAll"
+  <!-- <n-button class="noprint" @click="markAsDoneAll"
     >将本group内所有试题标记为done</n-button
-  >
-  <n-checkbox
+  > -->
+</n-button-group>
+  <!-- <n-checkbox
     class="noprint"
     v-model:checked="displayADirectly"
     @update:checked="handledisplayADirectlyCheckedChange"
   >
     直接从组卷网获取答案解析数据而非从oss缓存
-  </n-checkbox>
+  </n-checkbox> -->
   <div :style="{ width: '18.76cm', 'line-height': 'normal' }" id="oonom">
     <div class="noprint">
       <!-- <div class="labi-container">
@@ -73,9 +78,8 @@
             UUID:<span style="font-family: 'courier new'">{{ oo.id }}</span> |
             qid:<span style="font-family: 'courier new'">{{ oo.qid }}</span>
             <span v-if="shown.q"
-              >| {{ quesTypeList[""+oo.bankid][""+oo.type] }} | 
-              {{ diffMap[""+oo.diff] }} | Origin:
-              {{oo.origin}}</span
+              >| {{ quesTypeList["" + oo.bankid]["" + oo.type] }} |
+              {{ diffMap["" + oo.diff] }} | Origin: {{ oo.origin }}</span
             >
           </p>
           <div
@@ -87,31 +91,38 @@
             v-if="shown.q"
             :style="{ display: 'block', height: (oo._extb_height || 0) + 'px' }"
           ></div>
-          <div v-if="displayADirectly">
+
+
             <n-image
-              v-if="shown.a || showTL[oo.id]"
+              v-if="showTL [oo.id]"
               lazy
               :src="(XKWGetFile[oo.id] || { a: '' }).a"
               :width="700"
               ><template #placeholder><n-spin /></template
             ></n-image>
             <n-image
-              v-if="shown.a || showTL[oo.id]"
+              v-if="showTL[oo.id]"
               lazy
               :src="(XKWGetFile[oo.id] || { p: '' }).p"
               :width="700"
               ><template #placeholder><n-spin /></template
             ></n-image>
 
-            <div></div>
+            <div>
           </div>
-          <n-button class="noprint" text @click="markAsDone(oo)"
+          <!-- <n-button class="noprint" text @click="markAsDone(oo)"
             >标记为已完成</n-button
           >
-          <n-text class="noprint">完成状态：{{ doneinfo[oo.id] }}</n-text>
-          <n-button class="noprint" @click="showTL[oo.id] = true"
+          <n-text class="noprint">完成状态：{{ doneinfo[oo.id] }}</n-text> -->
+          <n-space  vertical>
+          <n-button class="noprint" @click="getsingleAP(oo)"
             >显示本题答案</n-button
           >
+          <!-- <n-button class="noprint" @click="$router.push('/mistakes_coll/coll_by_ques/'+oo.id)"
+            >收录错题</n-button
+          > -->
+          <miscoll-banner :id="oo.id"/></n-space>
+          <n-divider/>
         </div>
       </div>
     </n-image-group>
@@ -129,26 +140,31 @@ import {
   NCheckbox,
   NP,
   NSpin,
-  NImage,
+  NImage,NDivider,NSpace,
   NImageGroup,
-  NText,
-  NAnchor,
+  NText,NDropdown,NIcon,
+  NAnchor,NButtonGroup,
   NAnchorLink,
 } from "naive-ui";
 
 import { normalizeq } from "../../shared/normalize_q/toScreenDisplay";
 import { qtypes } from "../../shared/define_basic_qtypes";
 import { API } from "../../shared/APIHelper";
-import subjectsmapFlattened from "../../shared/base-zj-data/subjects-flattened-reversed.json"
-import quesTypeList from "../../shared/base-zj-data/questypeList.flattened.json"
-import diffMap from "../../shared/base-zj-data/diff.map.json"
+import subjectsmapFlattened from "../../shared/base-zj-data/subjects-flattened-reversed.json";
+import quesTypeList from "../../shared/base-zj-data/questypeList.flattened.json";
+import diffMap from "../../shared/base-zj-data/diff.map.json";
+import MiscollBanner from "../mistakes_coll/miscoll-banner.vue";
 import swal from "sweetalert";
+import {EllipsisVerticalOutline}from "@vicons/ionicons5"
 const shown = ref({
   q: true,
   a: false,
   p: false,
 });
 
+/**
+ * showTL[id]=true/false
+ */
 const showTL = ref({});
 
 const Noptions_ret2 = ref(false);
@@ -190,7 +206,8 @@ const _JSONparse = (v) => {
   return JSON.parse(v);
 };
 
-const doneinfo = ref({}),
+const 
+// doneinfo = ref({}),
   chunk2array = (mm) => Object.entries(mm).map((o) => o[1]);
 
 const markAsDone = async (rel) => {
@@ -213,35 +230,83 @@ const markAsDoneAll = async () => {
   );
 };
 
-const GetDoneInfo = async (id) => {
-  doneinfo.value[id] = await API.get("/api/qapi/doneinfo/getbyquuid/" + id);
-};
+// const GetDoneInfo = async (id) => {
+//   doneinfo.value[id] = await API.get("/api/qapi/doneinfo/getbyquuid/" + id);
+// };
 
 const displayADirectly = ref(false),
   XKWGetFile = ref({});
-const handledisplayADirectlyCheckedChange = (checked) => {
-  console.log(checked);
-  displayADirectly.value = checked;
-  if (displayADirectly.value) {
-    Object.entries(Tlist.value).forEach((v1) => {
-      console.log(v1);
-      API.get(
-        "/api/xkw-helper/get_more_detail/600/" + v1[1].bankid + "/" + v1[1].qid
-      ).then((r) => {
-        XKWGetFile.value[v1[1].id] = {
-          a:
-            API.host +
-            "/api/xkw-helper/route-pic?purl=" +
-            btoa(r.data.answerImg.replace("@2", "@3").replace("c2", "c1")),
-          p:
-            API.host +
-            "/api/xkw-helper/route-pic?purl=" +
-            btoa(r.data.parseImg.replace("@2", "@3").replace("c2", "c1")),
-        };
-      });
-    });
-  }
-};
+
+const getAllAP=()=>{
+  Object.entries(Tlist.value).forEach((v1) => {
+    getsingleAP(v1[1])
+  })
+}
+const getsingleAP=(vs)=>{
+  API.get("/api/xkw-helper/getCachedImg/"+vs.bankid+"/"+vs.qid+"/600").then(r=>{
+        XKWGetFile.value[vs.id]={
+            a:API.host+"/api/xkw-helper/route-pic?purl="+btoa(r.answer.replace("@2","@3")),
+            p:API.host+"/api/xkw-helper/route-pic?purl="+btoa(r.parse.replace("@2","@3")),
+        }
+        showTL.value[vs.id]=true
+        
+})
+}
+
+
+
+
+const MorePrintOptions=[
+        {
+          label: "生成Word版",
+          key: "export-word-v",
+          // icon: renderIcon(AddCircleOutline),
+          props: {
+            onClick: () => {
+              // router_push(router,"/ftc/manualadd?bankid="+bankid.value)
+              router.push('/grouping/preexport-1/' + route.params.id + '/word_tailored_version')
+            }
+          }
+        },        {
+          label: "已打印过的内容",
+          key: "historyCode",
+          // icon: renderIcon(ExitOutline),
+          props: {
+            onClick: async() => {
+              // window.vhtmlTemplate=await generateExpHTMLCode(FailedColl.value,exportEXT.value)
+              // router_push(router,"/ftc/export")
+              API.get("/api/group/getExported/"+route.params.id).then(oc=>{
+                localStorage.setItem("___thost___html_export",oc.htmlcode)
+                router.push("/paper/"+route.params.id)
+              })
+            }
+          }
+        }
+      ]
+
+// const handledisplayADirectlyCheckedChange = (checked) => {
+//   // console.log(checked);
+//   displayADirectly.value = checked;
+//   if (displayADirectly.value) {
+//     Object.entries(Tlist.value).forEach((v1) => {
+//       console.log(v1);
+//       API.get(
+//         "/api/xkw-helper/get_more_detail/600/" + v1[1].bankid + "/" + v1[1].qid
+//       ).then((r) => {
+//         XKWGetFile.value[v1[1].id] = {
+//           a:
+//             API.host +
+//             "/api/xkw-helper/route-pic?purl=" +
+//             btoa(r.data.answerImg.replace("@2", "@3").replace("c2", "c1")),
+//           p:
+//             API.host +
+//             "/api/xkw-helper/route-pic?purl=" +
+//             btoa(r.data.parseImg.replace("@2", "@3").replace("c2", "c1")),
+//         };
+//       });
+//     });
+//   }
+// };
 </script>
 
 <style>
@@ -285,29 +350,29 @@ img {
 <!-- <style src="../../shared/zujuan-stupid-style-inject.css" /> -->
 <style scoped>
 wave {
-    text-decoration-style: wavy;
-    text-decoration-line: underline;
-    text-underline-position: auto;
-    /* white-space: pre-wrap; */
+  text-decoration-style: wavy;
+  text-decoration-line: underline;
+  text-underline-position: auto;
+  /* white-space: pre-wrap; */
 }
 
-dot{
-    position: relative;
-    text-emphasis-style: dot;
-    text-emphasis-position: under left;
-    text-emphasis-color: inherit;
-    box-sizing: border-box;
-    padding-top: .25rem
+dot {
+  position: relative;
+  text-emphasis-style: dot;
+  text-emphasis-position: under left;
+  text-emphasis-color: inherit;
+  box-sizing: border-box;
+  padding-top: 0.25rem;
 }
 
 u {
-    text-decoration: underline;
-    text-underline-position: under;
-    white-space: break-spaces
+  text-decoration: underline;
+  text-underline-position: under;
+  white-space: break-spaces;
 }
 
-span>em {
-    font-style: normal;
-    font-weight: bold;
+span > em {
+  font-style: normal;
+  font-weight: bold;
 }
 </style>

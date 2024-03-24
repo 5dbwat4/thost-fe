@@ -1,5 +1,5 @@
 // import {first_load,loaded} from "./components/pre-loader"
-
+import { createPinia } from 'pinia'
 
 // first_load()
 ;(async()=>{
@@ -14,9 +14,11 @@
             {path:"/",component: ()=>import("./views/index/index.vue")},
             {path:"/home",component: ()=>import("./views/index/index.vue")},
             {path:"/about",component: ()=>import("./views/pages/about.vue")},
+            {path:"/settings",component: ()=>import("./views/pages/settings.vue")},
             ...(await import("./views/zujuanink-v3/routedef")).default,
             ...(await import("./views/grouping/routedef")).default,
             ...(await import("./views/mistakes_coll/routedef")).default,
+            ...(await import("./views/standalone-functions/danas/routedef.js")).default,
 
             {path:"/batch/:ids",component: ()=>import("./views/batch/index.vue")},
             {path:"/batching/syncbatch",component: ()=>import("./views/batch/syncbatch.vue")},
@@ -37,7 +39,7 @@
     // routes.push(...(await import("./views/zujuanink-v2/routedef")).default)
     // routes.push(...(await import("./views/zujuanink-v3/routedef")).default)
     routes.push(...(await import("./views/debug/routedef")).default)
-    routes.push(...(await import("./views/fcoll/routedef")).default)
+    // routes.push(...(await import("./views/fcoll/routedef")).default)
     const router = VueRouter.createRouter({
         history: 
         
@@ -49,14 +51,13 @@
       })
 
 
-
-
+      const pinia = createPinia()
     
 // ;await (await import("./blog-component/helper")).initComponentHelper();
 
 
 
-createApp(obj).use(router).mount("#app")
+createApp(obj).use(router).use(pinia).mount("#app")
 
 
 

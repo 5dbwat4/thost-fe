@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import topLevelAwait from "vite-plugin-top-level-await";
 import Components from 'unplugin-vue-components/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */
@@ -11,7 +12,11 @@ export default defineConfig({
     port:80,
     host:"127.0.0.1"
   },
-  plugins: [vue(),topLevelAwait({
+  plugins: [vue({
+    script:{
+      defineModel:true
+    }
+  }),topLevelAwait({
     // The export name of top-level await promise for each chunk module
     promiseExportName: "__tla",
     // The function to generate import names of top-level await promise in each chunk module
@@ -25,6 +30,11 @@ export default defineConfig({
   }),],
   build:{sourcemap:"hidden"},
   base:"./",
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
   terserOptions: {
     compress: {
       drop_console: true,

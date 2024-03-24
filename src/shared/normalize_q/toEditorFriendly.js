@@ -118,7 +118,7 @@ function normalizeq(q){
 //     ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}.</strong> (${Nopt.ootInfo[0]},${Nopt.ootInfo[1]}) `)
 // }
 // ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}. </strong>`)
-    return ool.outerHTML
+    return ool.innerHTML
 }
 
 

@@ -1,25 +1,40 @@
 import quesTypeList from "../base-zj-data/questypeList.flattened.json"
 import diffMap from "../base-zj-data/diff.map.json"
 
-function normalizeq(q,Nopt){
+
+
+function normalizeq(q,Nopt,options={
+    ReplaceChineseSubqN:true,
+    ResetFormula:true,
+    AddPictureInfo:true,
+    ResetParagraphFontSize:true,
+    TableToFourRows:false,
+    TextNodeToInlineParagraphs:true,
+    LengthenUnderlinedBlanks:true,
+    AddQuesTypeAndDiff:true,
+
+}){
     const ool=document.createElement("div")
     q=q.replaceAll("【题文】","")
 
-
+if(options.ReplaceChineseSubqN){
     if(Nopt.q0b.bankid==10){
         q=q.replaceAll(/【小题(\d)】/g,"$1. ")
     }
+}
     ool.innerHTML=q
 
 
 
     ool.querySelectorAll("img").forEach(v=>{
+        if(options.ResetFormula){
         if(v.src.includes("/formula/")){
             v.src=v.src.replace(".png",".svg")
             v.style.width=(v.width*.8)+"px"
             v.setAttribute("width",(v.width*.8))
             v.setAttribute("height","")
         }
+    }
         if(v.src.includes("/dksih/")){
             let tmp=/\?resizew=(\d*)/.exec(v.src)
             if(tmp&&tmp.length!=0){
@@ -29,15 +44,17 @@ function normalizeq(q,Nopt){
                 v.setAttribute("width",tmp[1])
                 v.setAttribute("height","")
             }
+            if(options.AddPictureInfo){
             v.outerHTML=`
         
-            <div style="width: fit-content;display: inline-block;text-align: center;" data-belongsto="${Nopt.tindex-1}" class="__ccccimage">${v.outerHTML}
+            <div style="width: fit-content;display: inline-block;text-align: center;" class="__ccccimage">${v.outerHTML}
     <p style="margin: 0 0;font-family: kaiti;">（第${Nopt.tindex}题图）</p></div>`
-            // v.setAttribute("data-pictid",Nopt.tindex)
+            }
+            v.setAttribute("data-pictid",Nopt.tindex)
         }
     })
 
-
+if(options.ResetParagraphFontSize){
     ool.querySelectorAll("p").forEach(v=>{
         if(!v.style.fontFamily){
             v.style.fontFamily="Times New Roman , 宋体"
@@ -49,6 +66,7 @@ function normalizeq(q,Nopt){
         // v.style.lineHeight="12pt"
         v.style.margin="0px"
     })
+}
 
 
     // ool.querySelectorAll("table[name=optionsTable]").forEach(v=>{
@@ -67,7 +85,7 @@ function normalizeq(q,Nopt){
     //     }
 
     // })
-    
+    if(options.TableToFourRows){
     ool.querySelectorAll("table[name=optionsTable]").forEach(v=>{
         if(v.querySelectorAll("td").length==4){
             // console.log("oo",v);
@@ -84,6 +102,7 @@ function normalizeq(q,Nopt){
         }
 
     })
+}
     // ool.querySelectorAll("table[name=optionsTable] td").forEach(v=>{
     //     if(!v.style.fontFamily){
     //         v.style.fontFamily="Times New Roman , 宋体"
@@ -95,6 +114,7 @@ function normalizeq(q,Nopt){
     //     // v.style.lineHeight="12pt"
     //     v.style.margin="0px"
     // })
+    if(options.ResetParagraphFontSize){
     ool.querySelectorAll("table[name=optionsTable] td").forEach(v=>{
         v.innerHTML="<span style='width:fit-content;display:block;'>"+v.innerHTML+"</span>"
         if(!v.style.fontFamily){
@@ -108,10 +128,11 @@ function normalizeq(q,Nopt){
         // v.style.lineHeight="12pt"
         v.style.margin="0px"
     })
+}
 
     //18.76/4
 
-    ool.style.fontFamily="Times New Roman , 宋体"
+   if(options.ResetParagraphFontSize){ ool.style.fontFamily="Times New Roman , 宋体"}
 
 
     // if(Nopt.ret2){
@@ -128,8 +149,8 @@ function normalizeq(q,Nopt){
 
 // console.log(ool.outerHTML);
 
-
-ool.childNodes.forEach(e=>{
+if(options.TextNodeToInlineParagraphs){
+    ool.childNodes.forEach(e=>{
     if(e.nodeName=="#text"){
         const chi=document.createElement("p")
         chi.style.display="inline"
@@ -150,7 +171,9 @@ ool.querySelectorAll("sup").forEach(
     (ee)=>{
     ee.style.display="inline"
 })
+}
 
+if(options.LengthenUnderlinedBlanks){
 ool.querySelectorAll("bk[type=underline]").forEach(
     (ee)=>{
     if(ee.innerText.includes("_")){
@@ -162,11 +185,13 @@ ool.querySelectorAll("bk[type=underline]").forEach(
 //   ee.style.textDecorationThickness=" 0.5px";
     }
 })
-
-if(Nopt.nqtype==0||Nopt.nqtype==3){
-    ool.insertAdjacentHTML("afterbegin",` (${quesTypeList[""+Nopt.q0b.bankid][""+Nopt.q0b.type]},${diffMap[""+Nopt.q0b.diff]}(${Nopt.q0b.diff})) `)
 }
 
+if(options.AddQuesTypeAndDiff){
+// if(Nopt.nqtype==0||Nopt.nqtype==3){
+    ool.insertAdjacentHTML("afterbegin",` (${quesTypeList[""+Nopt.q0b.bankid][""+Nopt.q0b.type]},${diffMap[""+Nopt.q0b.diff]}(${Nopt.q0b.diff})) `)
+// }
+}
 
 if(Nopt.nqtype==0||Nopt.nqtype==3||Nopt.nqtype==5){
     // console.log("rrr");

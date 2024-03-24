@@ -97,26 +97,7 @@ const WhetherFound=async(bid,qid)=>{
 
 const Save=async(qid)=>{
     saving.value[qid]=true
-    await API.get("/api/xkw-helper/get_pure_question/"+bid.value+"/"+qid).then(async(o1)=>{
-        const o=o1.data
-        const op={
-            bankid:bid.value,
-            qid,
-            q:o.body,
-            a:"<answerparser>unsaved|u</answerparser>",
-            extra:JSON.stringify({
-                from:o.paperSources[0]?o.paperSources[0].name:"",
-                knowledgepoint:o.knowledgeInfo.split("，"),
-                info:[o.type.name,o.diff.name+"("+o.diff.value+")"]
-
-            }),
-            timestamp:(new Date()).getTime()
-        }
-        API.post("/api/add",op).then(p=>{
-            saving.value[qid]=false
-        })
-
-    })
+    await API.get("/api/data/add/"+bid.value+"/"+qid)
 }
 
 
