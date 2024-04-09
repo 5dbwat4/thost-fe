@@ -90,7 +90,7 @@
   <n-popover trigger="hover"  v-for="liv in DATList">
     <template #trigger>
      <n-space> <n-p>Rate:{{ liv.danas_info.best_t_rate }} | useCount:{{  liv.useCount }} | 
-    updatedAt:{{ liv.time }} | ID: {{liv.id}} | {{ liv.diff.name }} | {{ liv.type.name }} | </n-p><n-button text @click="RemoveDAChunk(liv)">Remove</n-button>
+    updatedAt:{{ liv.time }} | ID: {{ liv.id }} | {{ liv.diff.name }} | {{ liv.type.name }} | </n-p><n-button text @click="RemoveDAChunk(liv)">Remove</n-button>
     </n-space></template>
     <question-block style="width: 700px;height:300px;overflow-y: scroll;" :qcontent="liv"></question-block>
   </n-popover>

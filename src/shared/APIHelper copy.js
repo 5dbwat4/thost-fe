@@ -30,7 +30,7 @@ const API={
         return localStorage.getItem("__5dbwat_proj__thost_apihost")
     }
 }
-import { useLoadingBar,useNotification } from 'naive-ui'
+import { useNotification } from 'naive-ui'
 import ACTe from "./APICallingTe.vue"
 import { h, ref, watch } from 'vue'
 
@@ -40,11 +40,10 @@ const ntf=ref(),acteInstance=h(ACTe,{
 })
 let timeoutId=0
 let ___once=false,___currentHasNtf=false
-let notification={},loadingBar={}
+let notification={}
 const initAPINotif=()=>{
   if(!___once){
     notification=useNotification()
-    loadingBar=useLoadingBar()
     // console.log(useNotification);
     // ntf.value=notification.create({
     //     title: 'API Calling.',
@@ -58,45 +57,40 @@ const initAPINotif=()=>{
     // ___currentHasNtf=true
       ___once=true
       // 
-      // setInterval(()=>{
-        // if(___currentHasNtf){
-          // ntf.value.destroy()
-      //     loadingBar.finish()
-      //     ___currentHasNtf=false
-      //   }
-      // },1000)
+      setInterval(()=>{
+        if(___currentHasNtf){
+          ntf.value.destroy()
+          ___currentHasNtf=false
+        }
+      },1000)
   }
 }
 
 const CheckAPICallN=()=>{
-  if(___once){
   // const notification=useNotification()
   if(APICallRemains.value==0){
     // console.log("jk1000");
-    // timeoutId=setTimeout(()=>{
+    timeoutId=setTimeout(()=>{
       // console.log("jk2000");
-      // if(___currentHasNtf){
-        // ntf.value.destroy()
-        // loadingBar.finish()
-        // ___currentHasNtf=false
-      // }
-    // },500)
-    loadingBar.finish()
+      if(___currentHasNtf){
+        ntf.value.destroy()
+        ___currentHasNtf=false
+      }
+    },500)
     // console.log(timeoutId);
   }else{
     // console.log("jk3",ntf.value);
-    // if(!___currentHasNtf){
-      // if(timeoutId!=0)clearTimeout(timeoutId)
-      // ntf.value=notification.create({
-      //   title: 'API Calling.',
-      //   closable: false,
-      //   content:()=>acteInstance,
-      //   // onClose: () => {
-      //   //   ntf.value = null
-      //   // }
-      // })
-loadingBar.start()
-      // ___currentHasNtf=true
+    if(!___currentHasNtf){
+      if(timeoutId!=0)clearTimeout(timeoutId)
+      ntf.value=notification.create({
+        title: 'API Calling.',
+        closable: false,
+        content:()=>acteInstance,
+        // onClose: () => {
+        //   ntf.value = null
+        // }
+      })
+      ___currentHasNtf=true
     }
     }
 }

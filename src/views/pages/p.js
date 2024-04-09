@@ -26,6 +26,11 @@ var regenattInfo = {
 
 localStorage.setItem("__5dbwat_proj__thost_apihost",APILoc)
 
+const bankid=window.bankid
+
+const exec00=()=>{
+
+
 const API={
     get:async(url)=>{
 
@@ -43,48 +48,52 @@ const API={
     }
 }
 
+async function ZujuanAPI(url,method="GET",body){
+    return await API.post("/api/xkw-helper/____sensitive/get_zujuan_app_content",{
+       url,
+       method,
+       body
+   })
+}
+
 async function SaveTn(vid, opt) {
     return new Promise(async (resolve, reject) => {
         let v = BMap[vid]
         let op = { extra: {} }
         op.qid = parseInt(v.attributes.questionid.nodeValue)
         op.bankid = parseInt(v.attributes.bankid.nodeValue)
-        await fetch(APILoc + "/api/xkw-helper/get_pure_question/" + op.bankid + "/" + op.qid).then(r => r.json()).then(async (o1) => {
-            const o = o1.data
-            op = {
-                qid: op.qid,
-                bankid: op.bankid,
-                q: o.body,
-                a: "<answerparser>unsaved|u</answerparser>",
-                extra: JSON.stringify({
-                    from: o.paperSources[0] ? o.paperSources[o.paperSources.length - 1].name : "",
-                    knowledgepoint: o.knowledgeInfo.split("，"),
-                    info: [o.type.name, o.diff.name + "(" + o.diff.value + ")"]
+        // await fetch(APILoc + "/api/xkw-helper/get_pure_question/" + op.bankid + "/" + op.qid).then(r => r.json()).then(async (o1) => {
+        //     const o = o1.data
+        //     op = {
+        //         qid: op.qid,
+        //         bankid: op.bankid,
+        //         q: o.body,
+        //         a: "<answerparser>unsaved|u</answerparser>",
+        //         extra: JSON.stringify({
+        //             from: o.paperSources[0] ? o.paperSources[o.paperSources.length - 1].name : "",
+        //             knowledgepoint: o.knowledgeInfo.split("，"),
+        //             info: [o.type.name, o.diff.name + "(" + o.diff.value + ")"]
 
-                }),
-                timestamp: (new Date()).getTime()
-            }
-            document.getElementById(`saveinfo_${vid}`).innerHTML = "Please Wait for <code>check_ques_parse</code> requests"
+        //         }),
+        //         timestamp: (new Date()).getTime()
+        //     }
+        //     document.getElementById(`saveinfo_${vid}`).innerHTML = "Please Wait for <code>check_ques_parse</code> requests"
 
 
 
-            document.getElementById(`saveinfo_${vid}`).innerHTML = "Please Wait for <code>save_img</code> requests"
-            if (opt.aonly) {
-                op.a = `<answerparser>unsaved|unsaved</answerparser>`
-            } else {
-                let imginfo = await getap(op.qid, op.bankid)
-                op.a = `<answerparser>${(await DownloadImg(imginfo.a))}|${(await DownloadImg(imginfo.q))}</answerparser>`
-            }
+        //     document.getElementById(`saveinfo_${vid}`).innerHTML = "Please Wait for <code>save_img</code> requests"
+        //     if (opt.aonly) {
+        //         op.a = `<answerparser>unsaved|unsaved</answerparser>`
+        //     } else {
+        //         let imginfo = await getap(op.qid, op.bankid)
+        //         op.a = `<answerparser>${(await DownloadImg(imginfo.a))}|${(await DownloadImg(imginfo.q))}</answerparser>`
+        //     }
+
             document.getElementById(`saveinfo_${vid}`).innerHTML = "Please wait for <code>save</code> request"
-            fetch(APILoc + "/api/add", {
-                method: "POST", body: JSON.stringify(op), headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(v => v.json()).then(v => {
+            fetch(APILoc + "/api/data/add/"+op.bankid+"/"+op.qid).then(v => v.json()).then(v => {
                 document.getElementById(`saveinfo_${vid}`).innerHTML = "<span style='color:green'>Saved</span>"
                 resolve(v.id)
             })
-        })
     })
 }
 async function DownloadImg(src) {
@@ -207,8 +216,28 @@ await SAL_Main(0)
     async function SAL_Main(mil){
         const ee = Object.entries(BMap)
         if(document.querySelector("#SaveAllAndPushP_FastMode").checked ){
-        await     API.post("/api/syncbatch/start-session",{title:document.querySelector(".exam-title .title-txt").innerText,time:(new Date()).getTime()})
+            let xxxxxxxlist=[]
+        // await     API.post("/api/syncbatch/start-session",{title:document.querySelector(".exam-title .title-txt").innerText,time:(new Date()).getTime()})
+        for (let i = 0; i < ee.length-mil; i++) {
+            await API.get("/api/data/add/"+ee[i][1].attributes.bankid.nodeValue + "/" + ee[i][1].attributes.questionid.nodeValue).then(soso=>{
+                xxxxxxxlist.push(soso.id)
+                document.getElementById("SaveAllAndPushP_Status").innerText=`Saving T ${i+1} / ${ee.length-mil}`
+            })
+
+            
         }
+
+
+        API.post("/api/group/new",{
+            entry:xxxxxxxlist.join(","),
+            timestamp:(new Date()).getTime(),
+            title:document.querySelector(".exam-title .title-txt").innerText,
+            desc:`${location.href}`
+        }).then(oo=>{
+            document.getElementById("SaveAllAndPushP_Status").innerText=`OK.`
+
+        })
+    }else{
         for (let i = 0; i < ee.length-mil; i++) {
             await fetch(APILoc + "/api/qapi/is_collected/" + ee[i][1].attributes.bankid.nodeValue + "/" + ee[i][1].attributes.questionid.nodeValue).then(o => o.json()).then(async (o) => {
                 console.log(document.getElementById(`syncinfo_${ee[i][0]}`),ee[i]);
@@ -230,22 +259,74 @@ await SAL_Main(0)
 
             })
         }
-        if(document.querySelector("#SaveAllAndPushP_FastMode").checked ){
-            await        API.get("/api/syncbatch/sync-session").then(v=>{
-                API.post("/api/group/new", {
-                    entry: v.data.currentids.join(","),
-                    timestamp: (new Date()).getTime(),
-                    title:v.data.title,
-                    desc:""
-                }).then(()=>{
-                    API.get("/api/syncbatch/kill-session")
-                })
-            })
+    }
+        // if(document.querySelector("#SaveAllAndPushP_FastMode").checked ){
+        //     await        API.get("/api/syncbatch/sync-session").then(v=>{
+        //         API.post("/api/group/new", {
+        //             entry: v.data.currentids.join(","),
+        //             timestamp: (new Date()).getTime(),
+        //             title:v.data.title,
+        //             desc:""
+        //         }).then(()=>{
+        //             API.get("/api/syncbatch/kill-session")
+        //         })
+        //     })
 
 
-        }
+        // }
 
     }
+}
+
+
+function init_saveBasket(){
+    document.getElementById("menu_tab").insertAdjacentHTML("beforeend",
+    `<a data-theme="" class="item " id="downloadBasketH">下载Basket</a>`)
+    document.getElementById("downloadBasketH").addEventListener("click",()=>{
+        $.getScript("https://unpkg.com/sweetalert/dist/sweetalert.min.js", () => {
+swal({
+    title: "Title", content: "input",
+  }).then(ooottttt=>{
+    console.log(ooottttt);
+    ZujuanAPI("/app-server/v1/basket/"+bankid).then(async(v)=>{
+        let TL=[]
+        v.data.structure.forEach(r=>{
+            TL.push(...r.list)
+        })
+
+        console.log(TL);
+        let xxxxxxxlist=[]
+
+        for (let i = 0; i < TL.length; i++) {
+            const element = TL[i];
+            await API.get("/api/data/add/"+bankid+"/"+element.id).then(soso=>{
+                xxxxxxxlist.push(soso.id)
+            })
+            
+        }
+
+
+        API.post("/api/group/new",{
+            entry:xxxxxxxlist.join(","),
+            timestamp:(new Date()).getTime(),
+            title:ooottttt,
+            desc:`Save from Basket.\nU: ${location.href}`
+        }).then(xx=>{
+            swal({
+                title:"OK."
+            })
+        })
+
+
+
+        
+
+
+  })
+    
+    })
+})
+    })
 }
 
 function AddQuesNumToQBlock() {
@@ -330,7 +411,7 @@ function isOriginal() {
 
 (function () {
     'use strict';
-    $.getScript("https://unpkg.com/sweetalert/dist/sweetalert.min.js", () => {
+    // $.getScript("https://unpkg.com/sweetalert/dist/sweetalert.min.js", () => {
         document.querySelectorAll(".tk-quest-item").forEach((v) => {
             // console.log(v)
             let vid = v.attributes["data-sys-id"].nodeValue
@@ -373,9 +454,15 @@ function isOriginal() {
             })
         }
 
-
+        init_saveBasket()
 
         isOriginal()
+
+        if(location.pathname.includes("/shijuan/")){
+            document.querySelectorAll(".exam-info").forEach(ooooo=>{
+                ooooo.style.overflow="visible"
+            })
+        }
 
         if (/\/\d*p\d*\.html/.test(location.pathname)) {
             console.log("aaa")
@@ -397,6 +484,36 @@ function isOriginal() {
                 InitRegenatt()
             }
         })
-    })
+    
 })();
 
+
+
+
+}
+
+exec00()
+
+const bindEventListener = function(type) {
+    const historyEvent = history[type];
+    return function() {
+        const newEvent = historyEvent.apply(this, arguments);
+       const e = new Event(type);
+        e.arguments = arguments;
+        window.dispatchEvent(e);
+        return newEvent;
+    };
+ };
+ history.pushState = bindEventListener('pushState');
+ history.replaceState = bindEventListener('replaceState');
+ window.addEventListener('replaceState', function(e) {
+   console.log('THEY DID IT AGAIN! replaceState');
+     setTimeout(()=>{
+         exec00()
+     },100)
+ 
+ });
+ window.addEventListener('pushState', function(e) {
+   console.log('THEY DID IT AGAIN! pushState');
+     exec00()
+ });

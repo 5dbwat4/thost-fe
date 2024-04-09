@@ -26,7 +26,7 @@ import { ref } from "vue"
 import statisticBlock from "./statisticBlock.vue"
 import loginstateBlock from "./loginstatusCheck.vue"
 const chunk1=marked(`
-你正在使用 thost v3 .
+
 
 `)
 

@@ -10,7 +10,7 @@
   <n-button
     class="noprint"
     @click="router.push('/grouping/preexport-1/' + route.params.id)"
-    >开始准备打印</n-button
+    >开始排版</n-button
   >
   <n-dropdown :options="MorePrintOptions">
       <n-button>
@@ -41,6 +41,7 @@
   >
     直接从组卷网获取答案解析数据而非从oss缓存
   </n-checkbox> -->
+
   <div :style="{ width: '18.76cm', 'line-height': 'normal' }" id="oonom">
     <div class="noprint">
       <!-- <div class="labi-container">
@@ -61,6 +62,35 @@
       />
     </n-anchor>
 
+    <n-table  striped>
+    <tbody>
+      <tr>
+        <td>Title</td>
+        <td>{{groupInfo.title}}</td>
+      </tr>      
+      <tr>
+        <td>Updated at</td>
+        <td>{{(new Date(groupInfo.timestamp)).toLocaleDateString()}}</td>
+      </tr>  
+      <tr>
+        <td>学科</td>
+        <td>{{subjectsmapFlattened[""+groupInfo.bankid]}}</td>
+      </tr>  
+      <tr>
+        <td>备注...<n-button text @click="router.push('/grouping/edit-desc/' + route.params.id)">编辑</n-button></td>
+        <td>{{groupInfo.desc}}</td>
+      </tr>  
+      <tr>
+        <td>ID</td>
+        <td>{{ groupInfo.id }}</td>
+      </tr>
+
+      <tr>
+        <td>题量</td>
+        <td>{{groupInfo.entry.split(",").length}}</td>
+      </tr>
+    </tbody>
+  </n-table>
     <n-image-group>
       <div
         id="corehtml"
@@ -139,7 +169,7 @@ import {
   NButton,
   NCheckbox,
   NP,
-  NSpin,
+  NSpin,NTable,
   NImage,NDivider,NSpace,
   NImageGroup,
   NText,NDropdown,NIcon,
@@ -168,7 +198,15 @@ const shown = ref({
 const showTL = ref({});
 
 const Noptions_ret2 = ref(false);
-const grouptitle = ref("");
+const grouptitle = ref(""),groupInfo=ref({
+    "id": "...",
+    "entry": "...",
+    "timestamp": 10,
+    "bankid": 11,
+    "title": "【标题】",
+    "desc": "",
+    "tags": null
+});
 
 const Tlist = ref({});
 let groupentry = [];
@@ -180,7 +218,8 @@ API.get("/api/group/get/" + route.params.id).then((sss) => {
   groupentry = sss.entry.split(",");
 
   grouptitle.value = sss.title;
-
+  
+  groupInfo.value=sss
   Promise.all(
     sss.entry.split(",").map(
       (v) =>
@@ -268,7 +307,7 @@ const MorePrintOptions=[
             }
           }
         },        {
-          label: "已打印过的内容",
+          label: "已排版的内容",
           key: "historyCode",
           // icon: renderIcon(ExitOutline),
           props: {

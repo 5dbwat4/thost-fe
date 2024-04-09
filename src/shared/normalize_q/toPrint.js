@@ -131,7 +131,7 @@ function normalizeq(q,Nopt){
 
 ool.childNodes.forEach(e=>{
     if(e.nodeName=="#text"){
-        const chi=document.createElement("p")
+        const chi=document.createElement("span")
         chi.style.display="inline"
         chi.style.margin="0"
     
@@ -142,6 +142,12 @@ ool.childNodes.forEach(e=>{
         e.parentNode.replaceChild(chi,e)
     }
 })
+
+if(ool.firstElementChild.tagName=="P"){
+    // ool.firstElementChild.tagName="SPAN"
+    ool.firstElementChild.outerHTML="<span>"+ool.firstElementChild.innerHTML+"</span><br/>"
+}
+
 ool.querySelectorAll("sub").forEach(
     (ee)=>{
     ee.style.display="inline"
@@ -228,9 +234,24 @@ if(Nopt.q0b.type==281302){
 
 
 ool.querySelectorAll("p").forEach(ee=>{
+    if(ee.parentElement.tagName!="TD"){
     if(ee.innerText=="\n\n"){
         ee.parentNode.removeChild(ee)
     }
+    if(ee.innerText==""){
+        ee.parentNode.removeChild(ee)
+    }
+}
+})
+ool.querySelectorAll("span").forEach(ee=>{
+    if(ee.parentElement.tagName!="TD"){
+    if(ee.innerText=="\n\n"){
+        ee.parentNode.removeChild(ee)
+    }
+    if(ee.innerText==""){
+        ee.parentNode.removeChild(ee)
+    }
+}
 })
 ool.querySelectorAll("br").forEach(vv=>{
     if(vv.nextSibling?.tagName=="BR"){

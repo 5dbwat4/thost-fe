@@ -1,28 +1,30 @@
 <template>
-  <n-checkbox
+  <!-- <n-checkbox
     class="noprint"
     v-model:checked="displayADirectly"
     @update:checked="handledisplayADirectlyCheckedChange"
   >
     直接从组卷网获取答案解析数据而非从oss缓存
-  </n-checkbox>
+  </n-checkbox> -->
   <n-button @click="HEI__0+=20" class="noprint">Height+</n-button>
   <n-button @click="HEI__0-=10" class="noprint">Height-</n-button>
+  <n-input-number class="noprint" v-model:value="HEI__0" style="width:90px"></n-input-number>
   <n-button @click="OCRAll(8)" class="noprint">OCR all chars</n-button>
   <n-button @click="OCRAll(3)" class="noprint">OCR all blocks</n-button>
   <n-button @click="OCRAllSelective()" class="noprint"
     >OCR all selective</n-button
   >
+  <n-button @click="showHeapHeight"  class="noprint">显示顶端高度: {{ HeapHeight }} px</n-button>
   <!-- <n-p class="noprint">Current Heap Height:{{  }}</n-p> -->
-  <div :style="{ width: '18.76cm', 'line-height': 'normal' }" id="oonom">
+  <div :style="{ width: '18.76cm', 'line-height': 'normal' }" id="oonom" v-if="loaded">
     <div class="noprint">
       <!-- <div class="labi-container">
                 <div class="labi-block" v-for="rr in [1,2,3,4,5,6,7]" :key="rr" 
         :style="{height:1045+'px'}">Page # {{rr}}</div>
         </div> -->
     </div>
-    <div :style="{display:'block',height:HEI__0+'pt'}"></div>
-    <n-image-group>
+    <div :style="{display:'block',height:HEI__0+'px'}"></div>
+    <!-- <n-image-group> -->
       <div
         id="corehtml"
         :style="{ width: '18.76cm', columns: 2, 'line-height': 'normal' }"
@@ -42,7 +44,7 @@
           </p>
         </div>
 
-          <div v-if="displayADirectly" style="overflow: hidden;display: inline-block;">
+          <div style="overflow: hidden;display: inline-block;">
             <img
               :src="(XKWGetFile[oo.id] || { a: '' }).a"
               v-if="!OCRResAccepted[oo.id]"
@@ -64,17 +66,17 @@
           </div>
         </div>
       </div>
-    </n-image-group>
+    <!-- </n-image-group> -->
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 const route = useRoute(),
   router = useRouter();
 
-import { NButton, NCheckbox, NP, NSpin, NImage, NImageGroup } from "naive-ui";
+import { NButton, NCheckbox, NP, NSpin, NImage, NImageGroup,NInputNumber } from "naive-ui";
 
 import { normalizeq } from "../../shared/normalize_q/toPrint";
 import { qtypes } from "../../shared/define_basic_qtypes";
@@ -83,6 +85,7 @@ import swal from "sweetalert";
 
 const HEI__0=ref(0)
 
+const loaded=ref(false)
 
 const shown = ref({
   q: true,
@@ -110,11 +113,27 @@ API.get("/api/group/get/"+route.params.id).then((sss) => {
         new Promise((res, rej) => {
           API.get("/api/data/get/" + v).then((i) => {
             Tlist.value[v] = i;
+            API.get("/api/xkw-helper/getCachedImg/"+i.bankid+"/"+i.qid+"/400").then(ra=>{
+                      XKWGetFile.value[i.id] = {
+          a:
+            API.host +
+            "/api/xkw-helper/route-pic?purl=" +
+            btoa(ra.answer.replace("@2", "@3").replace("c2", "c1")),
+          p:
+            API.host +
+            "/api/xkw-helper/route-pic?purl=" +
+            btoa(ra.parse.replace("@2", "@3").replace("c2", "c1")),
+        };
+        console.log(XKWGetFile,i);
+        res()
+            })
           });
-          GetDoneInfo(v);
+          // GetDoneInfo(v);
         })
     )
-  ).then(() => {});
+  ).then(() => {
+    loaded.value=true
+  });
   // fetch("/api/get",{"method":"POST","body":JSON.stringify({id:v}),"headers":{"Content-Type":"application/json"}}).then(o=>o.json()).then(i=>{
   //     Tlist.value[v]=i
   // })
@@ -134,56 +153,60 @@ const _JSONparse = (v) => {
 const doneinfo = ref({}),
   chunk2array = (mm) => Object.entries(mm).map((o) => o[1]);
 
-const markAsDone = async (rel) => {
-  console.log(rel);
-  await API.post("/api/qapi/doneinfo/mark", {
-    quuid: rel.id,
-    timestamp: new Date().getTime(),
-    displayednote: "",
-    note: "",
-    rate: 50,
-    bankid: rel.bankid,
-  });
-};
+// const markAsDone = async (rel) => {
+//   console.log(rel);
+//   await API.post("/api/qapi/doneinfo/mark", {
+//     quuid: rel.id,
+//     timestamp: new Date().getTime(),
+//     displayednote: "",
+//     note: "",
+//     rate: 50,
+//     bankid: rel.bankid,
+//   });
+// };
 
-const markAsDoneAll = async () => {
-  Promise.all(Object.entries(Tlist.value).map((rr) => markAsDone(rr[1]))).then(
-    (v) => {
-      swal("ok.");
-    }
-  );
-};
+// const markAsDoneAll = async () => {
+//   Promise.all(Object.entries(Tlist.value).map((rr) => markAsDone(rr[1]))).then(
+//     (v) => {
+//       swal("ok.");
+//     }
+//   );
+// };
 
-const GetDoneInfo = async (id) => {
-  doneinfo.value[id] = await API.get("/api/qapi/doneinfo/getbyquuid/" + id);
-};
+// const GetDoneInfo = async (id) => {
+//   doneinfo.value[id] = await API.get("/api/qapi/doneinfo/getbyquuid/" + id);
+// };
 
 const displayADirectly = ref(false),
   XKWGetFile = ref({});
-const handledisplayADirectlyCheckedChange = (checked) => {
-  console.log(checked);
-  displayADirectly.value = checked;
-  if (displayADirectly.value) {
-    Object.entries(Tlist.value).forEach((v1) => {
-      console.log(v1);
-      API.get(
-        "/api/xkw-helper/get_more_detail/400/" + v1[1].bankid + "/" + v1[1].qid
-      ).then((r) => {
-        _types[v1[0]] = r.data.type;
-        XKWGetFile.value[v1[1].id] = {
-          a:
-            API.host +
-            "/api/xkw-helper/route-pic?purl=" +
-            btoa(r.data.answerImg.replace("@2", "@3").replace("c2", "c1")),
-          p:
-            API.host +
-            "/api/xkw-helper/route-pic?purl=" +
-            btoa(r.data.parseImg.replace("@2", "@3").replace("c2", "c1")),
-        };
-      });
-    });
-  }
-};
+
+
+// const handledisplayADirectlyCheckedChange = (checked) => {
+//   console.log(checked);
+//   displayADirectly.value = checked;
+//   if (displayADirectly.value) {
+//     Object.entries(Tlist.value).forEach((v1) => {
+//       console.log(v1);
+//       API.get(
+//         "/api/xkw-helper/get_more_detail/400/" + v1[1].bankid + "/" + v1[1].qid
+//       ).then((r) => {
+//         _types[v1[0]] = r.data.type;
+//         XKWGetFile.value[v1[1].id] = {
+//           a:
+//             API.host +
+//             "/api/xkw-helper/route-pic?purl=" +
+//             btoa(r.data.answerImg.replace("@2", "@3").replace("c2", "c1")),
+//           p:
+//             API.host +
+//             "/api/xkw-helper/route-pic?purl=" +
+//             btoa(r.data.parseImg.replace("@2", "@3").replace("c2", "c1")),
+//         };
+//       });
+//     });
+//   }
+// };
+
+
 
 const orcres = ref({}),
   OCRResAccepted = ref({});
@@ -215,11 +238,27 @@ const OCRAll = (psm) => {
 
 const PSM_BLOCK=3,PSM_CHARS=8
 const OCRAllSelective = () => {
+  const asChar=[
+    2901,290101,2908,//11
+    2701,2704,
+    3011,3012,
+    3101,310101,310104,3103,
+    261104,
+  ],
+  asEnglishChoiceBlock=[
+    2801,280101,280102,280103,
+    2803,2804,280401,280402,280403,280404,
+    2805,2820,
+    2808,2809,280901,280902,280903,280904,
+    2812,281201,281203,
+2813,281301,281302,
+
+
+  ]
   for (let i = 0; i < chunk2array(Tlist.value).length; i++) {
     let oo = chunk2array(Tlist.value)[i];
-    if(
-        (""+_types[oo.id].id).startsWith("28")
-        ){
+    console.log(oo.type);
+    if(asEnglishChoiceBlock.includes(oo.type)){
         API.post("/ocr-service", {
       url: XKWGetFile.value[oo.id].a,
       psm:PSM_BLOCK,
@@ -228,7 +267,7 @@ const OCRAllSelective = () => {
       orcres.value[oo.id] = v.result;
       OCRResAccepted.value[oo.id] = true
     });
-    }else     if(_types[oo.id].choice){
+    }else     if(asChar.includes(oo.type)){
         API.post("/ocr-service", {
       url: XKWGetFile.value[oo.id].a,
       psm:PSM_CHARS,
@@ -241,6 +280,18 @@ const OCRAllSelective = () => {
 
   }
 };
+
+const HeapHeight=ref(0)
+
+const showHeapHeight=async()=>{
+  const scs=document.querySelectorAll("#oonom .noprint")
+  scs.forEach(oc=>{
+    oc.style.display="none"
+  })
+  await nextTick()
+  HeapHeight.value=document.querySelector("#oonom").clientHeight
+
+}
 </script>
 
 <style scoped>

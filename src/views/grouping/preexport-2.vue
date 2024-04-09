@@ -701,9 +701,26 @@ const optablereset=()=>{
 
 const deleteUnnecessaryBRs=()=>{
     document.querySelectorAll("p").forEach(ee=>{
+        console.log(ee.parentElement.tagName);
+        if(ee.parentElement.tagName!="TD"){
         if(ee.innerText=="\n\n"){
             ee.parentNode.removeChild(ee)
         }
+        if(ee.innerText==""){
+            ee.parentNode.removeChild(ee)
+        }
+    }
+    })
+    document.querySelectorAll("span").forEach(ee=>{
+        console.log(ee.parentElement.tagName);
+        if(ee.parentElement.tagName!="TD"){
+        if(ee.innerText=="\n\n"){
+            ee.parentNode.removeChild(ee)
+        }
+        if(ee.innerText==""){
+            ee.parentNode.removeChild(ee)
+        }
+    }
     })
     document.querySelectorAll("p").forEach(ee=>{
         if(ee.lastElementChild?.tagName=="BR"&&
