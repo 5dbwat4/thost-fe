@@ -3,6 +3,7 @@ import diffMap from "../base-zj-data/diff.map.json"
 
 function normalizeq(q,Nopt){
     const ool=document.createElement("div")
+    ool.classList.add("__normalized_block")
     q=q.replaceAll("【题文】","")
 
 
@@ -49,6 +50,13 @@ function normalizeq(q,Nopt){
         // v.style.lineHeight="12pt"
         v.style.margin="0px"
     })
+
+    ool.querySelectorAll("span").forEach(v=>{
+        if(v.style.fontSize=="14px"){
+            v.style.fontSize="9.5pt"
+        }
+    })
+    
 
 
     // ool.querySelectorAll("table[name=optionsTable]").forEach(v=>{
@@ -129,33 +137,37 @@ function normalizeq(q,Nopt){
 // console.log(ool.outerHTML);
 
 
-ool.childNodes.forEach(e=>{
-    if(e.nodeName=="#text"){
-        const chi=document.createElement("span")
-        chi.style.display="inline"
-        chi.style.margin="0"
+// ool.childNodes.forEach(e=>{
+//     if(e.nodeName=="#text"){
+//         const chi=document.createElement("span")
+//         chi.style.display="inline"
+//         chi.style.margin="0"
     
-        chi.innerText=e.textContent
-        if(e.textContent.includes("______________________________________________________")){
-            chi.style.wordBreak="break-all"
-        }
-        e.parentNode.replaceChild(chi,e)
-    }
-})
+//         chi.innerText=e.textContent
+//         if(e.textContent.includes("______________________________________________________")){
+//             chi.style.wordBreak="break-all"
+//         }
+//         e.parentNode.replaceChild(chi,e)
+//     }
+// })
 
-if(ool.firstElementChild.tagName=="P"){
+if(ool.firstElementChild.tagName=="P"&&
+
+[2809,280901,280902,2808].indexOf(Nopt.q0b.type)!=-1
+
+){
     // ool.firstElementChild.tagName="SPAN"
     ool.firstElementChild.outerHTML="<span>"+ool.firstElementChild.innerHTML+"</span><br/>"
 }
 
-ool.querySelectorAll("sub").forEach(
-    (ee)=>{
-    ee.style.display="inline"
-})
-ool.querySelectorAll("sup").forEach(
-    (ee)=>{
-    ee.style.display="inline"
-})
+// ool.querySelectorAll("sub").forEach(
+//     (ee)=>{
+//     ee.style.display="inline"
+// })
+// ool.querySelectorAll("sup").forEach(
+//     (ee)=>{
+//     ee.style.display="inline"
+// })
 
 ool.querySelectorAll("bk[type=underline]").forEach(
     (ee)=>{

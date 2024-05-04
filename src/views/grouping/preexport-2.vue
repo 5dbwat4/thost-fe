@@ -1,50 +1,52 @@
 <template>
     <div class="hanged noprint">
         <n-p>图片处理 Current Function:{{ registeredEvents.imageonclick }} <n-button text @click="registeredEvents.imageonclick='none'">Reset</n-button></n-p>
-<n-button class="noprint" type="success" @click="registeredEvents.imageonclick='imageresize'">图片大小</n-button>
-<n-button class="noprint" type="success" @click="registeredEvents.imageonclick='deleteNum'">删除图片下方的题号</n-button>
-<n-button class="noprint" @click="registeredEvents.imageonclick='floatRight'">图片漂浮</n-button>
-<n-button class="noprint" @click="registeredEvents.opttabelonclick='filla'">表格fill-available</n-button>
-<n-button class="noprint"  @click="deleteInlinePicNum">删除行内图片下方的题号</n-button>
-<n-button class="noprint" @click="picreset()">Picture Reset</n-button>
-<n-button class="noprint"  type="success" @click="registeredEvents.imageonclick='picreset'">Selected Picture Reset dbclick to do</n-button>
-<n-button class="noprint"  type="success" @click="removeUnnecessaryTPicNums">删除多余的题图标记</n-button>
+<n-button  type="success" @click="registeredEvents.imageonclick='imageresize'">图片大小</n-button>
+<n-button  type="success" @click="registeredEvents.imageonclick='deleteNum'">删除图片下方的题号</n-button>
+<n-button  @click="registeredEvents.imageonclick='floatRight'">图片漂浮</n-button>
+<n-button  @click="registeredEvents.opttabelonclick='filla'">表格fill-available</n-button>
+<n-button   @click="deleteInlinePicNum">删除行内图片下方的题号</n-button>
+<n-button  @click="picreset()">Picture Reset</n-button>
+<n-button   type="success" @click="registeredEvents.imageonclick='picreset'">Selected Picture Reset dbclick to do</n-button>
+<n-button   type="success" @click="removeUnnecessaryTPicNums">删除多余的题图标记</n-button>
+<n-button  @click="registeredEvents.imageonclick='addABRElem'">图片前加一个换行</n-button>
 
 <n-divider/>
 <n-p>试题块处理 Current Function:{{ registeredEvents.blockonclick }} <n-button text @click="registeredEvents.blockonclick='none'">Reset</n-button></n-p>
-<n-button class="noprint" type="success" @click="registeredEvents.blockonclick='blockextent';">提供空行</n-button>
-<n-button class="noprint" type="success" @click="registeredEvents.bodyonclick='cnaddline';">语文：添加横线</n-button>
+<n-button  type="success" @click="registeredEvents.blockonclick='blockextent';">提供空行</n-button>
+<n-button  type="success" @click="text2span();registeredEvents.bodyonclick='cnaddline';">语文：添加横线</n-button>
+<n-button @click="registeredEvents.blockonclick='blockextbatch';">选中题目均分至一页</n-button>
 <n-divider/>
 <n-p>全文处理</n-p>
 <n-p>Blank处理 Current Function:{{ registeredEvents.bkonclick }} <n-button text @click="registeredEvents.bkonclick='none'">Reset</n-button></n-p>
 <n-p>Table处理 Current Function:{{ registeredEvents.tableonclick }} <n-button text @click="registeredEvents.tableonclick='none'">Reset</n-button></n-p>
-<n-button class="noprint" type="success" @click="deleteUnnecessaryBRs()">删除多余换行</n-button>
-<n-button class="noprint" @click="registeredEvents.bodyonclick='deletedom';registeredEvents.imageonclick='none';registeredEvents.bkonclick='none'">删除选中DOM</n-button>
-<n-button class="noprint" @click="blankretheme1">Blank retheme X._______</n-button>
-<n-button class="noprint" @click="blankretheme2">Blank retheme 完型</n-button>
-<n-button class="noprint" @click="blankretheme3">调节'【小题x】'类展出</n-button>
-<n-button class="noprint" type="success" @click="betterfoENMain">OtherFormatter EN</n-button>
-<n-button class="noprint" @click="Extendblank">Extendblank</n-button>
-<n-button class="noprint" type="success" @click="registeredEvents.bkonclick='extentblank'">Extendblankwhenclick</n-button>
-<n-button class="noprint" type="success" @click="registeredEvents.tableonclick='tablerewidth'">表格取消宽度</n-button>
-<n-button class="noprint" @click="detable">Destroy table</n-button>
-<n-button class="noprint" @click="registeredEvents.blockonclick='addpage'">添加分页符</n-button>
+<n-button  type="success" @click="deleteUnnecessaryBRs()">删除多余换行</n-button>
+<n-button  @click="registeredEvents.bodyonclick='deletedom';registeredEvents.imageonclick='none';registeredEvents.bkonclick='none'">删除选中DOM</n-button>
+<n-button  @click="blankretheme1">Blank retheme X._______</n-button>
+<n-button  @click="blankretheme2">Blank retheme 完型</n-button>
+<n-button  @click="blankretheme3">调节'【小题x】'类展出</n-button>
+<n-button  type="success" @click="betterfoENMain">OtherFormatter EN</n-button>
+<n-button  @click="Extendblank">Extendblank</n-button>
+<n-button  type="success" @click="registeredEvents.bkonclick='extentblank'">Extendblankwhenclick</n-button>
+<n-button  type="success" @click="registeredEvents.tableonclick='tablerewidth'">表格取消宽度</n-button>
+<n-button  @click="detable">Destroy table</n-button>
+<n-button  @click="registeredEvents.blockonclick='addpage'">添加分页符</n-button>
 
-<n-button class="noprint" type="success" @click="optablereset()">Optable Reset</n-button>
-<n-button class="noprint" type="success" @click="wordwrap()">WordBreak</n-button>
+<n-button  type="success" @click="optablereset()">Optable Reset</n-button>
+<n-button  type="success" @click="wordwrap()">WordBreak</n-button>
 <n-divider/>
 <!-- <n-p>快速处理</n-p>
-<n-button class="noprint" type="success" @click="reformatEnglish()">英语套卷</n-button>
+<n-button  type="success" @click="reformatEnglish()">英语套卷</n-button>
 <n-divider/> -->
-<n-button class="noprint"  type="success" @click="op2change()">导出页</n-button>
-<n-button class="noprint"  type="success" @click="op2PDFPage()">导出页</n-button>
-<n-button class="noprint" @click="showPagePagenation=!showPagePagenation">Toggle sPP</n-button>
+<n-button   type="success" @click="op2change()">导出页</n-button>
+<n-button   type="success" @click="op2PDFPage()">导出页</n-button>
+<n-button  @click="showPagePagenation=!showPagePagenation">Toggle sPP</n-button>
 <!-- <div v-for="ev in registeredEvents">
 <span>{{ev.name}}</span><n-button text @click="ev.destory">Destroy</n-button>
 </div> --></div>
 <div class="noprint" v-if="showPagePagenation">
             <div class="labi-container">
-                <div class="labi-block" v-for="rr in [1,2,3,4,5,6,7]" :key="rr" :style="{height:1005+'px'}">Page #
+                <div class="labi-block" v-for="rr in [1,2,3,4,5,6,7]" :key="rr" :style="{height:HEIGHT_OF_PAGE+'px'}">Page #
                     {{rr}}</div>
             </div>
         </div>
@@ -67,6 +69,8 @@ const route=useRoute(),router=useRouter()
 const showPagePagenation=ref(true)
 
 
+const HEIGHT_OF_PAGE=1045
+
 const registeredEvents=ref({
     imageonclick:"none",
     bkonclick:"none",
@@ -85,8 +89,37 @@ const wordwrap=()=>{
     })
 }
 onMounted(()=>{
-    deleteUnnecessaryBRs()
+
     optablereset()
+
+    document.querySelectorAll(".__ccccimage").forEach(ooso=>{
+        // console.log(ooso.);
+
+        if(ooso.previousElementSibling?.className!="__ccccimage"
+    &&ooso.previousElementSibling?.tagName!="BR"){
+            // console.log("oootest");
+            if(ooso.previousElementSibling?.innerHTML=="&nbsp;&nbsp;&nbsp;"){
+                ooso.previousElementSibling.parentNode.removeChild(ooso.previousElementSibling)
+        }
+            ooso.insertAdjacentHTML("beforebegin","<br/>")
+        }
+        if(ooso.nextElementSibling?.className!="__ccccimage"
+        &&ooso.nextElementSibling?.tagName!="BR"){
+            // console.log("oootest");
+            if(ooso.nextElementSibling?.innerHTML=="&nbsp;&nbsp;&nbsp;"){
+                ooso.nextElementSibling.parentNode.removeChild(ooso.nextElementSibling)
+        }
+            ooso.insertAdjacentHTML("afterend","<br/>")
+        }
+        if(ooso.style.float=="right"&&
+        ooso.previousElementSibling?.tagName=="BR"&&
+        ooso.nextElementSibling?.tagName=="BR"){
+            ooso.nextElementSibling.parentNode.removeChild(ooso.nextElementSibling)
+        }
+        
+    })
+
+    deleteUnnecessaryBRs()
 
 
 //imageresize
@@ -112,6 +145,57 @@ onMounted(()=>{
         e.target.dataset.width=parseInt(e.target.dataset.width)+8
         e.target.style.width=e.target.dataset.width+"px"
         e.target.width=e.target.dataset.width
+    }
+    }
+    let ool=document.getElementById("coreop")
+     ool.querySelectorAll("img").forEach(v=>{
+        if(v.src.includes("/dksih/")){
+            v.addEventListener("click",_runresize)
+            v.addEventListener("contextmenu",_runresizeR)
+        }
+     })
+
+    //  const destroy=()=>{
+    //     let ool=document.getElementById("coreop")
+    //  ool.querySelectorAll("img").forEach(v=>{
+    //     if(v.src.includes("/dksih/")){
+    //         v.removeEventListener("click",_runresize)
+    //     }
+    //  })
+    //  }
+
+    //  registeredEvents.value.push({
+    //     name:"cig01",destroy
+    //  })
+
+
+})();
+
+
+//add a br elem
+;(()=>{
+    const _runresize=(e)=>{
+        if(registeredEvents.value.imageonclick=="addABRElem"){
+        // console.log(e.target)
+        // if(!e.target.dataset.width)e.target.dataset.width=e.target.width
+        // e.target.dataset.width=parseInt(e.target.dataset.width)-30
+        // e.target.style.width=e.target.dataset.width+"px"
+        // e.target.width=e.target.dataset.width
+        e.target.parentElement.insertAdjacentHTML("beforebegin","<br/>")
+    }
+    }
+    /**
+     * 
+     * @param {MouseEvent} e 
+     */
+    const _runresizeR=(e)=>{
+        if(registeredEvents.value.imageonclick=="addABRElem"){
+        // console.log(e.target)
+        e.preventDefault()
+        // if(!e.target.dataset.width)e.target.dataset.width=e.target.width
+        // e.target.dataset.width=parseInt(e.target.dataset.width)+8
+        // e.target.style.width=e.target.dataset.width+"px"
+        // e.target.width=e.target.dataset.width
     }
     }
     let ool=document.getElementById("coreop")
@@ -400,6 +484,73 @@ dom.style.breakAfter="page"
      })
 })();
 
+//blockexrtosinglepage
+;(()=>{
+    let curPS=[]
+    /**
+     * 
+     * @param {MouseEvent} e 
+     */
+    const _run=(e,dom)=>{
+        if(registeredEvents.value.blockonclick=="blockextbatch"){
+        // console.log(e.target)
+        if(curPS.includes(dom)){
+            let ic=HEIGHT_OF_PAGE/curPS.length
+    curPS.forEach(v=>{
+        v.querySelector(".extblank").setAttribute("data-height",ic-v.clientHeight)
+        v.querySelector(".extblank").style.height=(ic-v.clientHeight)+"px"
+        v.classList.remove("shadow")
+    })
+    curPS=[]
+        }else{
+            curPS.push(dom)
+            dom.classList.add("shadow")
+        }
+    }
+    }
+    /**
+     * 
+     * @param {MouseEvent} e 
+     */
+    // const _runR=(e)=>{
+    //     if(registeredEvents.value.imageonclick=="picreset"){
+    //     // console.log(e.target)
+    //     e.preventDefault()
+    //     if(!e.target.dataset.width)e.target.dataset.width=e.target.width
+    //     e.target.dataset.width=parseInt(e.target.dataset.width)+8
+    //     e.target.style.width=e.target.dataset.width+"px"
+    //     e.target.width=e.target.dataset.width
+    // }
+    // }
+
+    /**
+     * 
+     * @param {MouseEvent} e 
+     */
+    // const _rundel=(e,dom)=>{
+    //     if(registeredEvents.value.blockonclick=="blockextent"){
+    //         console.log(e,dom);
+    //         if(!dom.querySelector(".extblank").dataset.height)dom.querySelector(".extblank").dataset.height=0
+    //     dom.querySelector(".extblank").dataset.height=parseInt(dom.querySelector(".extblank").dataset.height)+50
+    //     dom.querySelector(".extblank").style.height=dom.querySelector(".extblank").dataset.height+"px"
+    // }
+    // }
+    // const _rundelR=(e,dom)=>{
+    //     if(registeredEvents.value.blockonclick=="blockextent"){
+    //         e.preventDefault()
+    //         if(!dom.querySelector(".extblank").dataset.height)dom.querySelector(".extblank").dataset.height=0
+    //     dom.querySelector(".extblank").dataset.height=parseInt(dom.querySelector(".extblank").dataset.height)-10
+    //     dom.querySelector(".extblank").style.height=dom.querySelector(".extblank").dataset.height+"px"
+    // }
+    // }
+    let ool=document.getElementById("coreop")
+     ool.querySelectorAll(".___core_block").forEach(v=>{
+            v.addEventListener("click",((dom)=>{return (e)=>{_run(e,dom)}})(v))
+            // v.addEventListener("contextmenu",((dom)=>{return (e)=>{_runR(e,dom)}})(v))
+
+     })
+})();
+
 
 //CN-add-line
 ;(()=>{
@@ -422,7 +573,7 @@ document.getElementById("coreop").addEventListener("click",(e)=>{
         e.target.insertAdjacentHTML("afterend",`
         <span style="display: block;
   height: 15pt;
-  text-decoration: underline dashed 0.5px; 
+  text-decoration: underline dotted 0.5pt; 
   overflow: clip;
   font-size: 14.5pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         `)
@@ -653,6 +804,21 @@ const picreset=()=>{
     })
 }
 
+const text2span=()=>{
+    document.getElementById("corehtml").querySelectorAll(".__normalized_block").forEach((ool)=>{
+        ool.childNodes.forEach(e=>{
+    if(e.nodeName=="#text"){
+        const chi=document.createElement("span")
+        chi.style.display="inline"
+        chi.style.margin="0"
+    
+        chi.innerText=e.textContent
+        e.parentNode.replaceChild(chi,e)
+    }
+})
+    })
+
+}
 
 const optablereset=()=>{
     function toTable(opts,lns){
@@ -730,9 +896,14 @@ const deleteUnnecessaryBRs=()=>{
         }
     })
     document.getElementById("coreop").querySelectorAll("br").forEach(vv=>{
+        console.log(vv.nextSibling);
+        if(vv.nextSibling?.nodeName=="#text"&&vv.nextSibling?.data.replaceAll("\n","").replaceAll(" ","")==""){
+            vv.nextSibling.parentNode.removeChild(vv.nextSibling)
+        }
         if(vv.nextSibling?.tagName=="BR"){
             vv.nextSibling.style.display="none"
         }
+
     })
     document.getElementById("coreop").querySelectorAll("br").forEach(vv=>{
             if(vv.style.display=="none"){

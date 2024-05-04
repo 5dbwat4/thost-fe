@@ -280,6 +280,7 @@ await SAL_Main(0)
 
 
 function init_saveBasket(){
+    if(!___once){
     document.getElementById("menu_tab").insertAdjacentHTML("beforeend",
     `<a data-theme="" class="item " id="downloadBasketH">下载Basket</a>`)
     document.getElementById("downloadBasketH").addEventListener("click",()=>{
@@ -327,6 +328,7 @@ swal({
     })
 })
     })
+}
 }
 
 function AddQuesNumToQBlock() {
@@ -488,10 +490,11 @@ function isOriginal() {
 })();
 
 
-
+___once=true
 
 }
 
+let ___once=false
 exec00()
 
 const bindEventListener = function(type) {

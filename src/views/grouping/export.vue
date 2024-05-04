@@ -1,17 +1,29 @@
 <template>
-
+ <!-- <n-watermark
+    content="github.com/5dbwat4/thost-fe"
+    :selectable="false"
+    :font-size="16"
+    :line-height="16"
+    :width="284"
+    :height="284"
+    :x-offset="12"
+    :y-offset="80"
+    :rotate="-15"
+  > -->
 <div id="coreop"></div>
+
+<!-- </n-watermark> -->
 </template>
 
 <script setup>
-import { onMounted } from "vue";
-import {NButton} from "naive-ui"
+import { onMounted, ref } from "vue";
+import {NButton,NWatermark} from "naive-ui"
 
 onMounted(()=>{
     document.getElementById("coreop").innerHTML=localStorage.getItem("___thost___html_export")
 })
 
-
+// const watermarked=ref(falsr)
 </script>
 
 <style>

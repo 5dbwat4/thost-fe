@@ -7,7 +7,7 @@ function normalizeq(q,Nopt){
         if(v.src.includes("/formula/")){
             v.src=v.src.replace(".png",".svg")
             // fetch(v.src.replace("https://staticzujuan.xkw.com/quesimg/Upload/formula/",API.host+"/api/xkw-helper/route-formula-svg/").replace(".svg",""))
-            v.style.width=(v.width*.8)+"px"
+            // v.style.width=(v.width*.8)+"px"
         }
         if(v.src.includes("/dksih/")){
             let tmp=/\?resizew=(\d*)/.exec(v.src)

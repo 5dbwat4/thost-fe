@@ -2,7 +2,7 @@ const APICallCount=ref(0),APICallRemains=ref(0)
 const API={
     get:async(url)=>{
         // console.log(await fetch(localStorage.getItem("__5dbwat_proj__thost_apihost")+url).then(v.json()));
-        APICallCount.value++,APICallRemains.value++
+        APICallRemains.value++
         CheckAPICallN()
         return await fetch(localStorage.getItem("__5dbwat_proj__thost_apihost")+url, {credentials:"include"} ).then(v=>{
           APICallRemains.value--
@@ -14,14 +14,15 @@ const API={
     /**
      * 
      * @param {String} url URL
-     * @param {{method:"GET"|"POST",body:JSON|undefined,url:String}} body 
+     * @param {JSON} body 
      * @returns 
      */
-    post:async(url,body)=>{APICallCount.value++,APICallRemains.value++
+    post:async(url,body)=>{
+      APICallRemains.value++
       CheckAPICallN()
         return await fetch(localStorage.getItem("__5dbwat_proj__thost_apihost")+url,{"method":"POST","body":JSON.stringify(body),"headers":{"Content-Type":"application/json"}, credentials:"include" }).then(v=>{
-          CheckAPICallN()
           APICallRemains.value--
+          CheckAPICallN()
           return v.json()}).catch(e=>{
             _Notificate(url,"POST",e)
           })
@@ -40,7 +41,7 @@ const ntf=ref(),acteInstance=h(ACTe,{
 })
 let timeoutId=0
 let ___once=false,___currentHasNtf=false
-let notification={},loadingBar={}
+let notification={},loadingBar={},loadingbarStarted=false
 const initAPINotif=()=>{
   if(!___once){
     notification=useNotification()
@@ -81,7 +82,9 @@ const CheckAPICallN=()=>{
         // ___currentHasNtf=false
       // }
     // },500)
+    // if(loadingbarStarted)
     loadingBar.finish()
+    loadingbarStarted=false
     // console.log(timeoutId);
   }else{
     // console.log("jk3",ntf.value);
@@ -95,7 +98,10 @@ const CheckAPICallN=()=>{
       //   //   ntf.value = null
       //   // }
       // })
+      if(!loadingbarStarted){
 loadingBar.start()
+loadingbarStarted=true
+      }
       // ___currentHasNtf=true
     }
     }

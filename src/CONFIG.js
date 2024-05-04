@@ -1,6 +1,6 @@
 export const ProjRoutePrefix=""
 export const ThostCONFIG={
     name:"THOST",
-    version:"1.6.1",
+    version:"1.6.2",
     creater5dbwat4:"5dbwat4"
 }

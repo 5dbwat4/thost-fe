@@ -7,6 +7,9 @@
 <n-button @click="deleteq()">Delete</n-button>
 <n-button @click="editq()">Edit</n-button>
 <n-button @click="showQA()">Show Q &amp; A</n-button>
+<n-button @click="router.push('/view/'+route.params.id+'/printParse')">PrintParse</n-button>
+<n-button @click="router.push('/view/'+route.params.id+'/editOrigin')">editOrigin</n-button>
+<n-button @click="showAtZujuan">组卷网中的这道题</n-button>
 <div >
     <img :src="XKWGetFile.a" style="width:600px;display:block;">
     <img :src="XKWGetFile.p" style="width:600px;display:block;">
@@ -62,6 +65,10 @@ const deleteq=()=>{
     })
 }
 
+
+const showAtZujuan=()=>{
+    window.open("https://zujuan.xkw.com/"+T.value.bankid+"q"+T.value.qid+".html")
+}
 
 </script>
 
