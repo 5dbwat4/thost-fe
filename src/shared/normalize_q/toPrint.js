@@ -1,5 +1,6 @@
 import quesTypeList from "../base-zj-data/questypeList.flattened.json"
 import diffMap from "../base-zj-data/diff.map.json"
+import { REPLACE_SUBQUESTION_NUMBER_TO_SINGLE_NUM___TYPES, TRANSFER_FIRST_ELEMENT_TAGNAME_P_TO_SPAN___TYPES } from "./NConfig"
 
 function normalizeq(q,Nopt){
     const ool=document.createElement("div")
@@ -152,8 +153,7 @@ function normalizeq(q,Nopt){
 // })
 
 if(ool.firstElementChild.tagName=="P"&&
-
-[2809,280901,280902,2808].indexOf(Nopt.q0b.type)!=-1
+TRANSFER_FIRST_ELEMENT_TAGNAME_P_TO_SPAN___TYPES.indexOf(Nopt.q0b.type)!=-1
 
 ){
     // ool.firstElementChild.tagName="SPAN"
@@ -201,7 +201,7 @@ if(Nopt.q0b.type==2809){
     })
     ool.innerHTML=ool.innerHTML.replaceAll(/【小题(\d*)】/g,"$1.")
 }
-if(Nopt.q0b.type==280901){
+if(REPLACE_SUBQUESTION_NUMBER_TO_SINGLE_NUM___TYPES.includes(Nopt.q0b.type) ){
     ool.innerHTML=ool.innerHTML.replaceAll(/【小题(\d*)】/g,"$1.")
 }
 if(Nopt.q0b.type==280902){

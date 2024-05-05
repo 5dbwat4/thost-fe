@@ -7,12 +7,17 @@
 <n-button @click="deleteq()">Delete</n-button>
 <n-button @click="editq()">Edit</n-button>
 <n-button @click="showQA()">Show Q &amp; A</n-button>
+<n-button @click="showRawData=!showRawData">Show Raw data</n-button>
 <n-button @click="router.push('/view/'+route.params.id+'/printParse')">PrintParse</n-button>
 <n-button @click="router.push('/view/'+route.params.id+'/editOrigin')">editOrigin</n-button>
 <n-button @click="showAtZujuan">组卷网中的这道题</n-button>
 <div >
     <img :src="XKWGetFile.a" style="width:600px;display:block;">
     <img :src="XKWGetFile.p" style="width:600px;display:block;">
+</div>
+<div v-if="showRawData">
+    <n-config-provider :hljs="hljs">
+    <n-code :code="code" language="json" show-line-numbers /></n-config-provider>
 </div>
 </div>
 </template>
@@ -23,10 +28,12 @@ import { onMounted, ref } from "vue"
 import {useRoute,useRouter} from "vue-router"
 import { normalizeq } from "@/shared/normalize_q/toScreenDSingle"
 import swal from "sweetalert"
-import { NButton,NSkeleton } from "naive-ui"
+import { NButton,NSkeleton,NCode,NConfigProvider } from "naive-ui"
 import {API} from "@/shared/APIHelper" 
 import { useSettings } from '@/stored/settings'
-
+import hljs from 'highlight.js/lib/core'
+  import json from 'highlight.js/lib/languages/json'
+  hljs.registerLanguage('json', json)
 
 const store = useSettings()
 const route=useRoute(),router=useRouter()
@@ -38,10 +45,13 @@ const T=ref({})
 const XKWGetFile=ref({a:"",p:""})
 
 
+const showRawData=ref(false),code=ref("")
+
 
 API.get("/api/data/get/"+route.params.id).then(v=>{
     T.value=v
     LoadingQ.value=false
+    code.value=JSON.stringify(v,null,4)
 })
 
 const showQA=()=>{
