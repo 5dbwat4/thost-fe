@@ -315,7 +315,22 @@ const MorePrintOptions=[
               })
             }
           }
-        },        {
+        },    {
+          label: "将本卷的试题加入basket",
+          key: "addtoBasket",
+          // icon: renderIcon(ExitOutline),
+          props: {
+            onClick: async() => {
+              API.post("/api/xkw-helper/relay-proxy/addtoBasket/"+groupInfo.value.bankid,{
+              // console.log({
+                ids:groupInfo.value.entry.split(",").map((om)=>{
+                  return Tlist.value[om].qid
+                }).join(",")
+              // })
+              })
+            }
+          }
+        },       {
           label: "在学科网搜索这张卷子",
           key: "searchFromZxxk",
           // icon: renderIcon(ExitOutline),

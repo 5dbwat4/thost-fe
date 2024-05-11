@@ -60,7 +60,7 @@
               >Accept OCR Result</n-button
             >
             <p style="display: inline;margin: 5.5pt;" v-if="OCRResAccepted[oo.id]">
-        {{ i+1 }}. ({{ oo.qid }}) {{ orcres[oo.id] }}
+        {{ i+1 }}.  {{ orcres[oo.id] }}
       </p>
             <div></div>
           </div>

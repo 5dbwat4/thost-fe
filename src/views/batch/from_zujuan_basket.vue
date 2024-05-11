@@ -29,8 +29,9 @@ import { API } from '../../shared/APIHelper';
     const bankid=ref(15),iiiiititle=ref("")
     const saveGroupLoading=ref(false),groupsaved=ref(false),groupid=ref("")
     const enterRoom=async()=>{
-        ZujuanAPI("/app-server/v1/basket/"+bankid.value).then(async(v)=>{
+        // ZujuanAPI("/app-server/v1/basket/"+bankid.value).then(async(v)=>{
         // API.get("/app-server/v1/basket/"+bankid.value).then(async(v)=>{
+        API.get("/api/xkw-helper/relay-proxy/getBasketContent/"+bankid.value).then(async(v)=>{
             let TL=[]
             v.data.structure.forEach(r=>{
                 TL.push(...r.list)

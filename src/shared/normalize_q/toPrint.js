@@ -1,6 +1,6 @@
 import quesTypeList from "../base-zj-data/questypeList.flattened.json"
 import diffMap from "../base-zj-data/diff.map.json"
-import { REPLACE_SUBQUESTION_NUMBER_TO_SINGLE_NUM___TYPES, TRANSFER_FIRST_ELEMENT_TAGNAME_P_TO_SPAN___TYPES } from "./NConfig"
+import { REPLACE_SUBQUESTION_NUMBER_TO_SINGLE_NUM___TYPES,betterOriginName__RemovalPatterns, TRANSFER_FIRST_ELEMENT_TAGNAME_P_TO_SPAN___TYPES } from "./NConfig"
 
 function normalizeq(q,Nopt){
     const ool=document.createElement("div")
@@ -191,6 +191,10 @@ if(Nopt.nqtype==0||Nopt.nqtype==3||Nopt.nqtype==5){
     ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}. </strong>`)
 }
 
+if(Nopt.nqtype==6){
+    ool.insertAdjacentHTML("afterbegin",`<strong>${Nopt.tindex}. </strong>  (${quesTypeList[""+Nopt.q0b.bankid][""+Nopt.q0b.type]},${diffMap[""+Nopt.q0b.diff]}(${Nopt.q0b.diff})) <span style="font-family:kaiti">（${betterOriginName(Nopt.q0b.origin)}）</span>`)
+}
+
 
 
 if(Nopt.q0b.type==2809){
@@ -291,6 +295,15 @@ function toTable(opts,lns){
     if(lns==4){
         return {ctn:"<tbody><tr>"+opts.join("</tr><tr>")+"</tr></tbody>",next_lns:1}
     }
+}
+
+
+
+function betterOriginName(str) {
+    betterOriginName__RemovalPatterns.forEach(oo=>{
+        str=str.replaceAll(oo,"")
+    })
+    return str
 }
 
 export{normalizeq}

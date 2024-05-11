@@ -1,6 +1,9 @@
 <template>
     <n-input-group>
-<n-input placeholder="Search" v-model:value="searchParams" :loading="LoadingSearch" :on-input="SearchUpdate"/>
+<n-input placeholder="Search" v-model:value="searchParams" :loading="LoadingSearch" :on-input="SearchUpdate" clearable/>
+<n-select v-model:value="searchFrom" :options="[
+    {label:'UUID',value:'UUID'},{label:'标题',value:'title'}
+    ]" style="width:160px" />
 <n-button @click="handleSearch">     <template #icon><n-icon :component="SearchOutline"/></template></n-button>
 <n-button @click="Refresh">     <template #icon><n-icon :component="RefreshOutline"/></template></n-button>
 </n-input-group>
@@ -10,7 +13,7 @@
 </template>
 
 <script setup>
-import { NButton, NDataTable,NInputGroup,NInput,NIcon,NTime } from "naive-ui";
+import { NButton, NDataTable,NInputGroup,NInput,NIcon,NTime,NSelect } from "naive-ui";
 import { h, ref } from "vue";
 import { API } from "../../shared/APIHelper"
 import {useRoute,useRouter} from "vue-router"
@@ -18,7 +21,7 @@ import { SearchOutline,RefreshOutline } from "@vicons/ionicons5";
 import subjectsmapFlattened from "../../shared/base-zj-data/subjects-flattened-reversed.json"
 const route=useRoute(),router=useRouter()
 
-const loadingData=ref(true),LoadingSearch=ref(false),searchParams=ref("")
+const loadingData=ref(true),LoadingSearch=ref(false),searchParams=ref(""),searchFrom=ref("UUID")
 const data=ref([])
 
 const columns=[{
@@ -94,11 +97,21 @@ const Refresh=()=>{
     LoadingSearch.value=false
 })
     }else{
-        API.get(`/api/v2/group/list/search/uuid?q=${encodeURIComponent(searchParams.value)}&offset=${(paginationReactive.value.page-1)*paginationReactive.value.pageSize}&pagesize=${paginationReactive.value.pageSize}`).then(v=>{
+        if(searchFrom.value=="UUID"){
+            API.get(`/api/v2/group/list/search/uuid?q=${encodeURIComponent(searchParams.value)}&offset=${(paginationReactive.value.page-1)*paginationReactive.value.pageSize}&pagesize=${paginationReactive.value.pageSize}`).then(v=>{
     data.value=v.data
     loadingData.value=false
-    LoadingSearch.value=false
-    })
+    LoadingSearch.value=false    })
+        }else if(searchFrom.value=="title"){
+            API.post(`/api/v2/group/list/search/title?offset=${(paginationReactive.value.page-1)*paginationReactive.value.pageSize}&pagesize=${paginationReactive.value.pageSize}`,{
+                query:searchParams.value
+            }).then(v=>{
+    data.value=v.data
+    loadingData.value=false
+    LoadingSearch.value=false    })
+        }
+
+
 }
 }
 

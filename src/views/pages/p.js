@@ -289,7 +289,8 @@ swal({
     title: "Title", content: "input",
   }).then(ooottttt=>{
     console.log(ooottttt);
-    ZujuanAPI("/app-server/v1/basket/"+bankid).then(async(v)=>{
+    // ZujuanAPI("/app-server/v1/basket/"+bankid).then(async(v)=>{
+        API.get("/api/xkw-helper/relay-proxy/getBasketContent/"+bankid).then(async(v)=>{
         let TL=[]
         v.data.structure.forEach(r=>{
             TL.push(...r.list)

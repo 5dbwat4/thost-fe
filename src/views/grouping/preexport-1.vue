@@ -30,8 +30,8 @@
   <n-button class="noprint" @click="Noptions_ret2 = true">Retheme 2</n-button>
   <n-button class="noprint" ref="btn1" @click="titleformat++">Title format</n-button>
   <n-button class="noprint" ref="btn2" @click="infoformat++">Info format</n-button>
-  <n-button class="noprint" ref="btn3" @click="op2change()"
-    >进入不包含fixed content的修正页面</n-button
+  <n-button class="noprint" ref="btn3" @click="op2change()" type="success"
+    >下一页</n-button
   >
   <div :style="{ width: '18.76cm', 'line-height': 'normal' }" id="oonom">
     <div class="noprint">
@@ -69,6 +69,7 @@
       <block-theme-0  v-if="infoformat % infoformatCount == 0" :data="oo" :index="i" :normalizeFun="normalizeq"/>
       <block-theme-1  v-if="infoformat % infoformatCount == 1" :data="oo" :index="i" :normalizeFun="normalizeq"/>
       <block-theme-2  v-if="infoformat % infoformatCount == 2" :data="oo" :index="i" :normalizeFun="normalizeq"/>
+      <block-theme-3  v-if="infoformat % infoformatCount == 3" :data="oo" :index="i" :normalizeFun="normalizeq"/>
         
 
         <div v-if="shown.q" :style="{display:'block',height:(oo._extb_height||0)+'px'}" class="extblank"></div>
@@ -109,10 +110,11 @@ import HeadTheme2 from "./themes/head-theme-2.vue";
 import BlockTheme0 from "./themes/block-theme-0.vue";
 import BlockTheme1 from "./themes/block-theme-1.vue";
 import BlockTheme2 from "./themes/block-theme-2.vue";
+import BlockTheme3 from "./themes/block-theme-3.vue";
 const titleformat = ref(0),
   infoformat = ref(0),
   titleformatCount = 3,
-  infoformatCount = 3;
+  infoformatCount = 4;
 
 
 const shown = ref({

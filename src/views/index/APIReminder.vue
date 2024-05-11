@@ -83,7 +83,7 @@
     } from "../../shared/globalEventMessageHelper";
 
 
-    const ALLOWED_API_ENTITY = "_5dbwat4_proj_thost_r3_be"
+    const ALLOWED_API_ENTITY = "_5dbwat4_proj_thost_r14_be"
 
     const Status = ref("waiting"),
         apihost = ref("https://example.com")
